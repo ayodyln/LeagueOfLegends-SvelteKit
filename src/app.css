@@ -1,0 +1,9 @@
+@import url('https://use.typekit.net/hqp3frd.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font-family: beaufort-pro, serif;
+}
