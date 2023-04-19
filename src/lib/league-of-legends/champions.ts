@@ -26,6 +26,3 @@ export const leagueChampions = async () => {
 	}
 }
 
-export const leagueSplashArt = async ()  => {
-	// 
-}

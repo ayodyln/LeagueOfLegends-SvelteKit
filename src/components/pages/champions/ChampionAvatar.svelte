@@ -1,16 +1,19 @@
 <script lang="ts">
-	export let champ: any
+	export let champ: any, buttonHndlr: any
 
-	//
+	// Champion Splash Card Button
 </script>
 
-<div class="avatar">
-	<div class="w-32 rounded-xl">
+<button
+	data-id={champ.id}
+	on:click={buttonHndlr}
+	class="avatar w-[19%] hover:ring hover:ring-2 rounded-xl overflow-hidden">
+	<div class="w-full pointer-events-none">
 		<img
 			src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/champion/${champ.id}.png`}
 			alt={champ.name} />
 	</div>
-</div>
+</button>
 
 <!-- {
     "version": "13.7.1",
