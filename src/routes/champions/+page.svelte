@@ -14,10 +14,10 @@
 <main class="w-full max-w-5xl m-auto flex-grow p-4">
 	<!-- Champions -->
 	<section id="champions">
-		<!-- Champion -->
 		{#each champions as champ}
 			<ChampionAvatar {champ} />
 		{/each}
 	</section>
+
 	<!-- Chosen Champion -->
 </main>

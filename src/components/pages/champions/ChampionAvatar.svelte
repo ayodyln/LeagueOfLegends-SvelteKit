@@ -1,14 +1,17 @@
-<script>
-	export let champ
+<script lang="ts">
+	export let champ: any
 
-	console.log(champ)
+	//
 </script>
 
 <div class="avatar">
-	<div class="w-32 rounded">
-		<img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+	<div class="w-32 rounded-xl">
+		<img
+			src={`http://ddragon.leagueoflegends.com/cdn/13.8.1/img/champion/${champ.id}.png`}
+			alt={champ.name} />
 	</div>
 </div>
+
 <!-- {
     "version": "13.7.1",
     "id": "Thresh",
