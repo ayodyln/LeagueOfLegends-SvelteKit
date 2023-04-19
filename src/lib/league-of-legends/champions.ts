@@ -15,3 +15,17 @@ export const recentChampions = async (championData: any) => {
 	return championData
 }
 
+// Fetch Champions
+export const leagueChampions = async () => {
+	try {
+		const leagueData = await fetch('api/riot')
+		return await leagueData.json()
+	} catch (error) {
+		console.log(error)
+		return []
+	}
+}
+
+export const leagueSplashArt = async ()  => {
+	// 
+}

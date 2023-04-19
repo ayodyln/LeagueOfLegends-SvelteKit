@@ -1,19 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import RecentChamp from '../components/RecentChamp.svelte'
-	import { recentChampions } from '$lib/champions/Champions'
+	import { leagueChampions, recentChampions } from '$lib/league-of-legends/champions'
 
-	let champions: any = {}
+	let newChampions: any = {}
 
 	onMount(async () => {
-		try {
-			const lol_data = await fetch(`api/riot`)
-			const lol_res = await lol_data.json()
-			champions = await recentChampions(lol_res.champions)
-			console.log(champions)
-		} catch (error) {
-			console.error(error)
-		}
+		const leagueAPI = await leagueChampions()
+		newChampions = await recentChampions(leagueAPI.champions)
 	})
 </script>
 
@@ -23,7 +17,7 @@
 
 <main class="w-full max-w-5xl m-auto flex-grow p-4">
 	<section class="font-sans">
-		<RecentChamp recents={champions.recents} />
+		<RecentChamp recents={newChampions.recents} />
 		<div class="divider m-0 mt-3" />
 	</section>
 </main>
