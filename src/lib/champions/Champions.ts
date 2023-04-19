@@ -1,4 +1,4 @@
-export const championsData = async (championData: any) => {
+export const recentChampions = async (championData: any) => {
 	championData.data = Array.from(Object.values(championData.data))
 	championData.recents = championData.data.filter((champ: { id: string }) => {
 		if (
@@ -14,3 +14,4 @@ export const championsData = async (championData: any) => {
 
 	return championData
 }
+

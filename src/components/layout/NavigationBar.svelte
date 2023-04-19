@@ -1,5 +1,5 @@
 <script>
-	import Logo from './Logo.svelte'
+	import Logo from '../Logo.svelte'
 </script>
 
 <div class="navbar bg-base-200">
@@ -23,25 +23,47 @@
 
 			<ul class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
 				<li>
-					<a>Champions</a>
+					<a href="/champions">Champions</a>
+				</li>
+
+				<li>
+					<a href="/items">Items</a>
 				</li>
 				<li>
-					<a>Item 3</a>
+					<a href="/spells">Spells</a>
+				</li>
+				<li>
+					<a href="/builds">Builds</a>
 				</li>
 			</ul>
 		</div>
 
-		<a href="/" class="btn btn-ghost normal-case text-xl">
+		<a href="/" class="btn btn-ghost normal-case text-xl flex h-10">
 			<Logo />
 		</a>
 	</div>
+
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1">
-			<li><a>Item 1</a></li>
-			<li><a>Item 3</a></li>
+			<li>
+				<a href="/champions">Champions</a>
+			</li>
+
+			<li>
+				<a href="/items">Items</a>
+			</li>
+
+			<li>
+				<a href="/spells">Spells</a>
+			</li>
+
+			<li>
+				<a href="/builds">Builds</a>
+			</li>
 		</ul>
 	</div>
+
 	<div class="navbar-end">
-		<a href="/" class="btn">Create Build</a>
+		<a href="/" class="btn">Build Creator</a>
 	</div>
 </div>

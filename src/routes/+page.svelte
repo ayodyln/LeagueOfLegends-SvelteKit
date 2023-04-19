@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import RecentChamp from '../components/RecentChamp.svelte'
-	import { championsData } from '$lib/champions/Champions'
+	import { recentChampions } from '$lib/champions/Champions'
 
 	let champions: any = {}
 
@@ -9,7 +9,7 @@
 		try {
 			const lol_data = await fetch(`api/riot`)
 			const lol_res = await lol_data.json()
-			champions = await championsData(lol_res.champions)
+			champions = await recentChampions(lol_res.champions)
 			console.log(champions)
 		} catch (error) {
 			console.error(error)
@@ -21,9 +21,9 @@
 	<title>LoL SvelteKit App</title>
 </svelte:head>
 
-<main class="w-full max-w-5xl m-auto flex-grow">
+<main class="w-full max-w-5xl m-auto flex-grow p-4">
 	<section class="font-sans">
 		<RecentChamp recents={champions.recents} />
-		<div class="divider m-0" />
+		<div class="divider m-0 mt-3" />
 	</section>
 </main>
