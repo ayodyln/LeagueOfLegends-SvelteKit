@@ -1,11 +1,12 @@
 <script lang="ts">
-	export let champ: any, buttonHndlr: any
+	export let champ: any, buttonHndlr: any, selectedChampion: any
 
 	// Champion Splash Card Button
 </script>
 
 <button
 	data-id={champ.id}
+	class:ring={selectedChampion ? selectedChampion.name === champ.name : false}
 	on:click={buttonHndlr}
 	class="avatar w-[19%] hover:ring hover:ring-2 rounded-xl overflow-hidden">
 	<div class="w-full pointer-events-none">
