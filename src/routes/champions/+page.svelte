@@ -5,11 +5,13 @@
 	import SelectedChamp from '../../components/pages/champions/SelectedChamp.svelte'
 
 	let champions: any = []
-	let selectedChampion: any 
+	let selectedChampion: any
+	let champTags = []
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
+		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
 	})
 
 	const buttonHndlr = async (event: any) => {
@@ -41,7 +43,7 @@
 		<section class="bg-neutral w-full rounded-r-xl overflow-hidden">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
-				<SelectedChamp {selectedChampion} />
+				<SelectedChamp {selectedChampion} {champTags} />
 			{:else}
 				<p>select a champion</p>
 			{/if}
