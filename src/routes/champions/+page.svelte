@@ -6,12 +6,13 @@
 
 	let champions: any = []
 	let selectedChampion: any
-	let champTags = []
+	let champTags: any[] = []
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
+		console.log(champTags)
 	})
 
 	const buttonHndlr = async (event: any) => {
@@ -43,7 +44,7 @@
 		<section class="bg-neutral w-full rounded-r-xl overflow-hidden">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
-				<SelectedChamp {selectedChampion} {champTags} />
+				<SelectedChamp {selectedChampion} />
 			{:else}
 				<p>select a champion</p>
 			{/if}
