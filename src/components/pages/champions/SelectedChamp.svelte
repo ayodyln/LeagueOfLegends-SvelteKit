@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 
+	import Stats from './Stats.svelte'
+
 	export let selectedChampion: any
 
 	const colorBadgeHandler = (tag: string) => {
@@ -27,7 +29,7 @@
 	})
 </script>
 
-<section id="champArt" class="h-96 overflow-hidden">
+<section id="champArt" class="h-80 overflow-hidden">
 	<img
 		class="w-full"
 		src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_0.jpg`}
@@ -48,18 +50,9 @@
 	<div class="divider m-0" />
 
 	<div class="flex flex-col gap-2">
-		<div id="stats" class="bg-base-300 border border-base-100 p-2 rounded">
-			<section id="baseStats">
-				<p>HP: {selectedChampion.stats.hp}</p>
-				<p>Armor: {selectedChampion.stats.armor}</p>
-				<p>Atk: {selectedChampion.stats.attackdamage}</p>
-				<p>Atk Speed: {selectedChampion.stats.attackspeed}</p>
-				<p>MP: {selectedChampion.stats.mp}</p>
-				<p>Magic Def: {selectedChampion.stats.spellblock}</p>
-				<p>Atk Range: {selectedChampion.stats.attackrange}</p>
-				<p>Crit Chance: {selectedChampion.stats.crit}</p>
-			</section>
-		</div>
+		<section id="baseStats" class="flex w-full justify-between">
+			<Stats {selectedChampion} />
+		</section>
 
 		<div id="lore" class="h-auto">
 			{selectedChampion.lore}

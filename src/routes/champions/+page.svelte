@@ -34,17 +34,17 @@
 </script>
 
 <main class="w-full max-w-5xl m-auto p-4 text-white">
-	<div class="flex">
+	<div class="flex h-[700px]">
 		<section
 			id="champions"
-			class="flex flex-wrap gap-[3px] w-96 h-[1000px] overflow-auto bg-base-300 p-2 rounded-lg justify-center rounded-l-xl">
+			class="flex flex-wrap gap-[3px] w-96 h-full overflow-auto bg-base-300 p-2 rounded-lg justify-center rounded-l-xl">
 			{#each champions as champ}
 				<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
 			{/each}
 		</section>
 
 		<!-- Chosen Champion -->
-		<section class="bg-neutral w-full rounded-r-xl overflow-hidden">
+		<section class="bg-neutral w-full h-full rounded-r-xl overflow-auto">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
 				<SelectedChamp {selectedChampion} />
