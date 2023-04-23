@@ -38,14 +38,33 @@
 	<div class="flex justify-between items-center">
 		<h1 class="text-3xl">{selectedChampion.name}</h1>
 
-		<span class="">
+		<span class="flex gap-3">
 			{#each selectedChampion.tags as tag}
-				<div class="badge badge-outline {colorBadgeHandler(tag)}">{tag}</div>
+				<div class="badge badge-outline badge-lg {colorBadgeHandler(tag)}">{tag}</div>
 			{/each}
 		</span>
 	</div>
 
 	<div class="divider m-0" />
+
+	<div class="flex flex-col gap-2">
+		<div id="stats" class="bg-base-300 border border-base-100 p-2 rounded">
+			<section id="baseStats">
+				<p>HP: {selectedChampion.stats.hp}</p>
+				<p>Armor: {selectedChampion.stats.armor}</p>
+				<p>Atk: {selectedChampion.stats.attackdamage}</p>
+				<p>Atk Speed: {selectedChampion.stats.attackspeed}</p>
+				<p>MP: {selectedChampion.stats.mp}</p>
+				<p>Magic Def: {selectedChampion.stats.spellblock}</p>
+				<p>Atk Range: {selectedChampion.stats.attackrange}</p>
+				<p>Crit Chance: {selectedChampion.stats.crit}</p>
+			</section>
+		</div>
+
+		<div id="lore" class="h-auto">
+			{selectedChampion.lore}
+		</div>
+	</div>
 </section>
 
 <!-- {
@@ -135,10 +154,6 @@
         "Aatrox's attacks are very telegraphed, so use the time to dodge the hit zones.",
         "Aatrox's Infernal Chains are easier to exit when running towards the sides or at Aatrox.",
         "Keep your distance when Aatrox uses his Ultimate to prevent him from reviving."
-    ],
-    "tags": [
-        "Fighter",
-        "Tank"
     ],
     "partype": "Blood Well",
     "info": {
