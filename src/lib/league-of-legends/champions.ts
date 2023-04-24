@@ -41,3 +41,22 @@ export const getRandomIconImage = async () => {
 		console.log(error)
 	}
 }
+
+export const colorBadgeHandler = (tag: string) => {
+	switch (tag) {
+		case 'Fighter':
+			return 'badge-error'
+		case 'Tank':
+			return 'badge-info'
+		case 'Mage':
+			return 'badge-primary'
+		case 'Assassin':
+			return 'badge-warning'
+		case 'Marksman':
+			return 'badge-secondary'
+		case 'Support':
+			return 'badge-success'
+		default:
+			return ''
+	}
+}
