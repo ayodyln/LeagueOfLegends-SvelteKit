@@ -1,21 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
+	import { search } from '$lib/stores'
 	import { getRandomIconImage, leagueChampions } from '$lib/league-of-legends/champions'
 	import ChampionAvatar from '../../components/pages/champions/ChampionAvatar.svelte'
 	import SelectedChamp from '../../components/pages/champions/SelectedChamp.svelte'
 	import FilterChampions from '../../components/pages/champions/FilterChampions.svelte'
 
 	let champions: any = []
+	let filteredChampions: any[]
+	let filter: string
+	let champTags: any[]
 	let selectedChampion: any
-	let champTags: any[] = []
-	let randomIcon = ''
-	let filter = ''
+	let randomIcon: string
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
-
 		const icon: any = await getRandomIconImage()
 		randomIcon = `http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${icon.image.full}`
 	})
@@ -53,22 +54,35 @@
 		}
 	}
 
-	const filterHandler = (e) => {
-		console.log('filtering....')
-		const type = e.target.dataset.type
-		console.log(type)
+	const filterHandler = (e: any) => {
+		if (filter === e.target.dataset.type) {
+			filter = ''
+			filteredChampions = []
+			return
+		}
+
+		filter = e.target.dataset.type
+		filteredChampions = champions.filter((champ: { tags: string | string[] }) =>
+			champ.tags.includes(filter)
+		)
 	}
 </script>
 
 <main class="w-full max-w-6xl m-auto p-4 text-white">
 	<div class="flex h-[700px]">
 		<section id="champions" class="w-96 h-full bg-base-300 p-2 rounded-lg rounded-r-none">
-			<FilterChampions {filterHandler} />
+			<FilterChampions {filterHandler} {filter} />
 			<div class="divider m-0 h-[3%]" />
-			<div class="overflow-auto h-[92%] flex flex-wrap gap-[3px] justify-center w-full">
-				{#each champions as champ}
-					<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
-				{/each}
+			<div class="overflow-auto max-h-[85%] flex flex-wrap gap-[3px] justify-center w-full pr-1">
+				{#if !filter}
+					{#each champions as champ}
+						<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
+					{/each}
+				{:else}
+					{#each filteredChampions as champ}
+						<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
+					{/each}
+				{/if}
 			</div>
 		</section>
 
