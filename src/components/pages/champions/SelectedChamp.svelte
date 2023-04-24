@@ -29,16 +29,27 @@
 	})
 </script>
 
-<section id="champArt" class="h-80 overflow-hidden">
-	<div class="carousel rounded-box rounded-b-none">
-		{#each selectedChampion.skins as skin}
-			<div class="carousel-item w-full">
+<section id="champArt" class="">
+	<div class="carousel h-[410px]">
+		{#each selectedChampion.skins as skin, i}
+			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+			<div class="carousel-item h-auto w-full relative">
 				<img
+					id={`item${i}`}
 					loading="lazy"
 					class="w-full"
 					src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_${skin.num}.jpg`}
 					alt={skin.name} />
+				{#if i !== 0}
+					<span class="absolute z-1 bottom-0 left-0 bg-neutral bg-opacity-50 w-full p-2 font-bold"
+						>{skin.name}</span>
+				{/if}
 			</div>
+		{/each}
+	</div>
+	<div class="flex justify-center w-full py-1 gap-2">
+		{#each selectedChampion.skins as skin, i}
+			<a href="#item{i}" class="btn btn-xs btn-ghost">{i + 1}</a>
 		{/each}
 	</div>
 </section>
@@ -46,8 +57,8 @@
 <section class="p-2">
 	<div class="flex justify-between items-center">
 		<span>
-			<h1 class="text-3xl">{selectedChampion.name}</h1>
-			<h3 class="text-xs font-extralight">{selectedChampion.title}</h3>
+			<h1 class="text-3xl font-bold">{selectedChampion.name}</h1>
+			<h3 class="text-xs font-extralight capitalize">{selectedChampion.title}</h3>
 		</span>
 
 		<span class="flex gap-3">
@@ -59,102 +70,71 @@
 
 	<div class="divider m-0" />
 
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-4">
 		<section id="baseStats" class="flex w-full justify-between">
 			<Stats {selectedChampion} />
 		</section>
 
-		<div id="lore" class="h-auto">
+		<section id="abilities" class="flex flex-wrap w-full gap-2">
+			<h2 class="text-lg font-bold">Abilities</h2>
+			<div class="w-full h-24 bg-neutral-focus rounded-lg flex">
+				<div class="h-full rounded overflow-hidden">
+					<img
+						src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/passive/{selectedChampion.passive
+							.image.full}"
+						alt="Tailwind-CSS-Avatar-component"
+						class="h-full" />
+				</div>
+
+				<div class="p-2 w-3/4">
+					<p>Passive - {selectedChampion.passive.name}</p>
+
+					<p class="text-xs">{selectedChampion.passive.description}</p>
+				</div>
+			</div>
+			{#each selectedChampion.spells as spell}
+				<div class="w-full h-24 bg-neutral-focus rounded-lg flex">
+					<div class="h-full rounded overflow-hidden">
+						<img
+							src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
+							alt="Tailwind-CSS-Avatar-component"
+							class="h-full" />
+					</div>
+
+					<div class="p-2 w-3/4">
+						<p class="capitalize">{spell.id.slice(-1)} - {spell.name}</p>
+
+						<p class="text-xs">{spell.description}</p>
+					</div>
+				</div>
+			{/each}
+		</section>
+
+		<div id="lore" class="h-auto italic">
+			<div class="divider h-0" />
 			{selectedChampion.lore}
+			<div class="divider h-0" />
 		</div>
+
+		<section id="tips" class="flex gap-2">
+			<div id="ally" class="flex flex-col gap-2 w-1/2">
+				<h2 class="text-success">Ally Tips</h2>
+				{#each selectedChampion.allytips as tip}
+					<span class="bg-base-100 rounded-lg p-4 border border-success">{tip}</span>
+				{/each}
+			</div>
+			<div class="divider divider-horizontal m-0 w-1" />
+			<div id="enemy" class="flex flex-col gap-2 w-1/2">
+				<h2 class="text-error">Enemy Tips</h2>
+				{#each selectedChampion.enemytips as tip}
+					<span class="bg-base-100 rounded-lg p-4 border border-error">{tip}</span>
+				{/each}
+			</div>
+		</section>
 	</div>
 </section>
 
 <!-- {
-    "id": "Aatrox",
-    "image": {
-        "full": "Aatrox.png",
-        "sprite": "champion0.png",
-        "group": "champion",
-        "x": 0,
-        "y": 0,
-        "w": 48,
-        "h": 48
-    },
-    "skins": [
-        {
-            "id": "266000",
-            "num": 0,
-            "name": "default",
-            "chromas": false
-        },
-        {
-            "id": "266001",
-            "num": 1,
-            "name": "Justicar Aatrox",
-            "chromas": false
-        },
-        {
-            "id": "266002",
-            "num": 2,
-            "name": "Mecha Aatrox",
-            "chromas": true
-        },
-        {
-            "id": "266003",
-            "num": 3,
-            "name": "Sea Hunter Aatrox",
-            "chromas": false
-        },
-        {
-            "id": "266007",
-            "num": 7,
-            "name": "Blood Moon Aatrox",
-            "chromas": false
-        },
-        {
-            "id": "266008",
-            "num": 8,
-            "name": "Prestige Blood Moon Aatrox",
-            "chromas": false
-        },
-        {
-            "id": "266009",
-            "num": 9,
-            "name": "Victorious Aatrox",
-            "chromas": true
-        },
-        {
-            "id": "266011",
-            "num": 11,
-            "name": "Odyssey Aatrox",
-            "chromas": true
-        },
-        {
-            "id": "266020",
-            "num": 20,
-            "name": "Prestige Blood Moon Aatrox (2022)",
-            "chromas": false
-        },
-        {
-            "id": "266021",
-            "num": 21,
-            "name": "Lunar Eclipse Aatrox",
-            "chromas": true
-        }
-    ],
-    "blurb": "Once honored defenders of Shurima against the Void, Aatrox and his brethren would eventually become an even greater threat to Runeterra, and were defeated only by cunning mortal sorcery. But after centuries of imprisonment, Aatrox was the first to find...",
-    "allytips": [
-        "Use Umbral Dash while casting The Darkin Blade to increase your chances of hitting the enemy.",
-        "Crowd Control abilities like Infernal Chains or your allies' immobilizing effects will help you set up The Darkin Blade.",
-        "Cast World Ender when you are sure you can force a fight."
-    ],
-    "enemytips": [
-        "Aatrox's attacks are very telegraphed, so use the time to dodge the hit zones.",
-        "Aatrox's Infernal Chains are easier to exit when running towards the sides or at Aatrox.",
-        "Keep your distance when Aatrox uses his Ultimate to prevent him from reviving."
-    ],
-    "partype": "Blood Well",
     "spells": [
         {
             "id": "AatroxQ",
