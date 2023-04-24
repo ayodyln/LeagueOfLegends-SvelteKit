@@ -8,6 +8,7 @@
 	let selectedChampion: any
 	let champTags: any[] = []
 	let randomIcon = ''
+	let filter = ''
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
@@ -17,6 +18,25 @@
 		const icon: any = await getRandomIconImage()
 		randomIcon = `http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${icon.image.full}`
 	})
+
+	const colorBadgeHandler = (tag: string) => {
+		switch (tag) {
+			case 'Fighter':
+				return 'badge-error'
+			case 'Tank':
+				return 'badge-info'
+			case 'Mage':
+				return 'badge-primary'
+			case 'Assassin':
+				return 'badge-warning'
+			case 'Marksman':
+				return 'badge-secondary'
+			case 'Support':
+				return 'badge-success'
+			default:
+				return ''
+		}
+	}
 
 	const buttonHndlr = async (event: any) => {
 		selectedChampion = false
@@ -33,21 +53,45 @@
 	}
 </script>
 
-<main class="w-full max-w-5xl m-auto p-4 text-white">
+<main class="w-full max-w-6xl m-auto p-4 text-white">
 	<div class="flex h-[700px]">
-		<section
-			id="champions"
-			class="flex flex-wrap gap-[3px] w-96 h-full overflow-auto bg-base-300 p-2 rounded-lg justify-center rounded-l-xl">
-			{#each champions as champ}
-				<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
-			{/each}
+		<section id="champions" class="w-96 h-full bg-base-300 p-2 rounded-lg rounded-r-none">
+			<div class="flex h-fit flex-wrap w-full">
+				<!-- filter -->
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Fighter">
+					<img src="/Fighter_icon.webp" alt="Fighter" class="w-5" />
+				</button>
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Tank">
+					<img src="/Tank_icon.webp" alt="Tank" class="w-5" />
+				</button>
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Mage">
+					<img src="/Mage_icon.webp" alt="Mage" class="w-5" />
+				</button>
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Assassin">
+					<img src="/Slayer_icon.webp" alt="Assassin" class="w-5" />
+				</button>
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Marksman">
+					<img src="/Marksman_icon.webp" alt="Marksman" class="w-5" />
+				</button>
+				<button class="btn btn-sm tooltip w-1/6" data-tip="Support">
+					<img src="/Support_icon.webp" alt="Support" class="w-5" />
+				</button>
+			</div>
+
+			<div class="divider m-0 h-[3%]" />
+
+			<div class="overflow-auto h-[92%] flex flex-wrap gap-[3px] justify-center w-full">
+				{#each champions as champ}
+					<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
+				{/each}
+			</div>
 		</section>
 
 		<!-- Chosen Champion -->
 		<section class="bg-neutral w-full h-full rounded-r-xl overflow-auto">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
-				<SelectedChamp {selectedChampion} />
+				<SelectedChamp {colorBadgeHandler} {selectedChampion} />
 			{:else}
 				<div class="w-full h-full flex flex-col justify-center items-center gap-2">
 					{#if !randomIcon}

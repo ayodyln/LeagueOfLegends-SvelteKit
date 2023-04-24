@@ -3,26 +3,7 @@
 
 	import Stats from './Stats.svelte'
 
-	export let selectedChampion: any
-
-	const colorBadgeHandler = (tag: string) => {
-		switch (tag) {
-			case 'Fighter':
-				return 'badge-error'
-			case 'Tank':
-				return 'badge-info'
-			case 'Mage':
-				return 'badge-primary'
-			case 'Assassin':
-				return 'badge-warning'
-			case 'Marksman':
-				return 'badge-secondary'
-			case 'Support':
-				return 'badge-success'
-			default:
-				return ''
-		}
-	}
+	export let selectedChampion: any, colorBadgeHandler: any
 
 	onMount(() => {
 		console.log(selectedChampion)
