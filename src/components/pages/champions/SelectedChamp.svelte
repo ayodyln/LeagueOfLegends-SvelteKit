@@ -30,15 +30,25 @@
 </script>
 
 <section id="champArt" class="h-80 overflow-hidden">
-	<img
-		class="w-full"
-		src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_0.jpg`}
-		alt={selectedChampion.name} />
+	<div class="carousel rounded-box rounded-b-none">
+		{#each selectedChampion.skins as skin}
+			<div class="carousel-item w-full">
+				<img
+					loading="lazy"
+					class="w-full"
+					src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_${skin.num}.jpg`}
+					alt={skin.name} />
+			</div>
+		{/each}
+	</div>
 </section>
 
 <section class="p-2">
 	<div class="flex justify-between items-center">
-		<h1 class="text-3xl">{selectedChampion.name}</h1>
+		<span>
+			<h1 class="text-3xl">{selectedChampion.name}</h1>
+			<h3 class="text-xs font-extralight">{selectedChampion.title}</h3>
+		</span>
 
 		<span class="flex gap-3">
 			{#each selectedChampion.tags as tag}
@@ -62,9 +72,6 @@
 
 <!-- {
     "id": "Aatrox",
-    "key": "266",
-    "name": "Aatrox",
-    "title": "the Darkin Blade",
     "image": {
         "full": "Aatrox.png",
         "sprite": "champion0.png",
@@ -136,7 +143,6 @@
             "chromas": true
         }
     ],
-    "lore": "Once honored defenders of Shurima against the Void, Aatrox and his brethren would eventually become an even greater threat to Runeterra, and were defeated only by cunning mortal sorcery. But after centuries of imprisonment, Aatrox was the first to find freedom once more, corrupting and transforming those foolish enough to try and wield the magical weapon that contained his essence. Now, with stolen flesh, he walks Runeterra in a brutal approximation of his previous form, seeking an apocalyptic and long overdue vengeance.",
     "blurb": "Once honored defenders of Shurima against the Void, Aatrox and his brethren would eventually become an even greater threat to Runeterra, and were defeated only by cunning mortal sorcery. But after centuries of imprisonment, Aatrox was the first to find...",
     "allytips": [
         "Use Umbral Dash while casting The Darkin Blade to increase your chances of hitting the enemy.",
@@ -149,34 +155,6 @@
         "Keep your distance when Aatrox uses his Ultimate to prevent him from reviving."
     ],
     "partype": "Blood Well",
-    "info": {
-        "attack": 8,
-        "defense": 4,
-        "magic": 3,
-        "difficulty": 4
-    },
-    "stats": {
-        "hp": 650,
-        "hpperlevel": 114,
-        "mp": 0,
-        "mpperlevel": 0,
-        "movespeed": 345,
-        "armor": 38,
-        "armorperlevel": 4.45,
-        "spellblock": 32,
-        "spellblockperlevel": 2.05,
-        "attackrange": 175,
-        "hpregen": 3,
-        "hpregenperlevel": 1,
-        "mpregen": 0,
-        "mpregenperlevel": 0,
-        "crit": 0,
-        "critperlevel": 0,
-        "attackdamage": 60,
-        "attackdamageperlevel": 5,
-        "attackspeedperlevel": 2.5,
-        "attackspeed": 0.651
-    },
     "spells": [
         {
             "id": "AatroxQ",
