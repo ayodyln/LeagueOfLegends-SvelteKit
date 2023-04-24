@@ -3,6 +3,7 @@
 	import { getRandomIconImage, leagueChampions } from '$lib/league-of-legends/champions'
 	import ChampionAvatar from '../../components/pages/champions/ChampionAvatar.svelte'
 	import SelectedChamp from '../../components/pages/champions/SelectedChamp.svelte'
+	import FilterChampions from '../../components/pages/champions/FilterChampions.svelte'
 
 	let champions: any = []
 	let selectedChampion: any
@@ -51,35 +52,19 @@
 			console.log(error)
 		}
 	}
+
+	const filterHandler = (e) => {
+		console.log('filtering....')
+		const type = e.target.dataset.type
+		console.log(type)
+	}
 </script>
 
 <main class="w-full max-w-6xl m-auto p-4 text-white">
 	<div class="flex h-[700px]">
 		<section id="champions" class="w-96 h-full bg-base-300 p-2 rounded-lg rounded-r-none">
-			<div class="flex h-fit flex-wrap w-full">
-				<!-- filter -->
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Fighter">
-					<img src="/Fighter_icon.webp" alt="Fighter" class="w-5" />
-				</button>
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Tank">
-					<img src="/Tank_icon.webp" alt="Tank" class="w-5" />
-				</button>
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Mage">
-					<img src="/Mage_icon.webp" alt="Mage" class="w-5" />
-				</button>
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Assassin">
-					<img src="/Slayer_icon.webp" alt="Assassin" class="w-5" />
-				</button>
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Marksman">
-					<img src="/Marksman_icon.webp" alt="Marksman" class="w-5" />
-				</button>
-				<button class="btn btn-sm tooltip w-1/6" data-tip="Support">
-					<img src="/Support_icon.webp" alt="Support" class="w-5" />
-				</button>
-			</div>
-
+			<FilterChampions {filterHandler} />
 			<div class="divider m-0 h-[3%]" />
-
 			<div class="overflow-auto h-[92%] flex flex-wrap gap-[3px] justify-center w-full">
 				{#each champions as champ}
 					<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
