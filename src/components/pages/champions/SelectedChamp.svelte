@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
 	import { favorites } from '$lib/stores'
 
 	import Stats from './Stats.svelte'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
+	import { onMount } from 'svelte'
+	import Items from './Items.svelte'
 
-	export let selectedChampion: any
+	export let selectedChampion: any, items: any, itemTags: any
 
 	const favHandler = () => {
 		const favs = JSON.parse($favorites)
@@ -14,7 +15,6 @@
 			$favorites = JSON.stringify([
 				...new Set(favs.filter((fav: string) => fav !== selectedChampion.id))
 			])
-			console.log($favorites)
 			return
 		}
 
@@ -23,7 +23,8 @@
 
 	onMount(() => {
 		console.log(selectedChampion)
-		console.log(JSON.parse($favorites))
+		console.log(items)
+		console.log(itemTags)
 	})
 </script>
 
@@ -56,7 +57,7 @@
 			$favorites
 		).includes(selectedChampion.id)
 			? 'fill-error'
-			: 'fill-whitef'}">
+			: 'fill-white'}">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class=" pointer-events-none">
 			<!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
 			<path
@@ -127,20 +128,24 @@
 			<div class="divider h-0" />
 		</div>
 
-		<section id="tips" class="flex gap-2">
+		<section id="tips" class="flex gap-8">
 			<div id="ally" class="flex flex-col gap-2 w-1/2">
 				<h2 class="text-success">Ally Tips</h2>
 				{#each selectedChampion.allytips as tip}
-					<span class="bg-base-100 rounded-lg p-4 border border-success">{tip}</span>
+					<span class="bg-base-100 rounded-lg p-3 border border-success">{tip}</span>
 				{/each}
 			</div>
-			<div class="divider divider-horizontal m-0 w-1" />
+
 			<div id="enemy" class="flex flex-col gap-2 w-1/2">
 				<h2 class="text-error">Enemy Tips</h2>
 				{#each selectedChampion.enemytips as tip}
-					<span class="bg-base-100 rounded-lg p-4 border border-error">{tip}</span>
+					<span class="bg-base-100 rounded-lg p-3 border border-error">{tip}</span>
 				{/each}
 			</div>
 		</section>
+
+		<div class="divider h-0 m-0" />
+
+		<Items {itemTags} {items} />
 	</div>
 </section>

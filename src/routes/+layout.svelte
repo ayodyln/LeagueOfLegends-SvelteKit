@@ -4,6 +4,10 @@
 	import NavigationBar from '../components/layout/NavigationBar.svelte'
 </script>
 
-<NavigationBar />
-<slot />
-<Footer />
+<div class="flex h-full min-h-screen max-height-auto flex-col">
+	<NavigationBar />
+	<div class="flex-grow">
+		<slot />
+	</div>
+	<Footer />
+</div>

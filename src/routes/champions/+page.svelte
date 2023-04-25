@@ -7,13 +7,18 @@
 	import ChampionDefaultPage from '../../components/pages/champions/ChampionDefaultPage.svelte'
 
 	let champions: any = []
+	let items: any = []
+	let summonerSpells = []
 	let filteredChampions: any[]
 	let filter: string
 	let champTags: any[]
+	let itemTags: any[]
 	let selectedChampion: any
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
+		items = Object.values(leagueAPI.items.data).map((item) => item)
+		itemTags = [...new Set(items.map((tag: any) => tag.tags).flat())]
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
 	})
@@ -46,12 +51,12 @@
 	}
 </script>
 
-<main class="w-full max-w-6xl m-auto p-4 text-white">
-	<div class="flex h-[700px]">
-		<section id="champions" class="w-96 h-full bg-base-300 p-2 rounded-lg rounded-r-none">
+<main class="w-full max-w-6xl p-4 text-white mx-auto">
+	<div class="flex h-1/2">
+		<section id="champions" class="w-96 h-[800px] bg-base-300 p-2 rounded-lg rounded-r-none">
 			<FilterChampions {filterHandler} {filter} />
 			<div class="divider m-0 h-[3%]" />
-			<div class="overflow-auto max-h-[85%] flex flex-wrap gap-[3px] justify-center w-full p-1">
+			<div class="overflow-auto h-[86%] flex flex-wrap gap-[3px] justify-center w-full p-1">
 				{#if !filter}
 					{#each champions as champ}
 						<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />
@@ -65,10 +70,10 @@
 		</section>
 
 		<!-- Chosen Champion -->
-		<section class="bg-neutral w-full h-full rounded-r-xl overflow-auto">
+		<section class="bg-neutral w-full h-[800px] rounded-r-xl overflow-auto">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
-				<SelectedChamp {selectedChampion} />
+				<SelectedChamp {selectedChampion} {items} {itemTags} />
 			{:else}
 				<ChampionDefaultPage />
 			{/if}
