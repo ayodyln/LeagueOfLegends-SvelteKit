@@ -21,7 +21,7 @@
 		// itemTags = [...new Set(items.map((tag: any) => tag.tags).flat())]
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
-		console.log(champTags)
+		// console.log(champTags)
 	})
 
 	const buttonHndlr = async (event: any) => {

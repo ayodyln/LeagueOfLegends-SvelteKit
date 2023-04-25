@@ -9,7 +9,6 @@
 
 	const itemHandler = (e: any) => {
 		const tag = e.target.dataset.tag
-		console.log(tag)
 
 		if (filter === tag) {
 			filter = ''
@@ -26,33 +25,52 @@
 		suggestedItems = recommendedItems('Fighter')
 
 		selectedChampion.tags.forEach((tag: any) => {
-			console.log(tag)
 			suggestedItems = [...new Set([...suggestedItems, ...recommendedItems(tag)])]
 		})
 
-		console.log(suggestedItems)
+		console.log(items)
 	})
 </script>
 
 <section id="items" class="flex gap-4">
 	<!-- filter -->
-	<ul class="menu bg-base-100 w-56 h-fit">
+	<ul class="menu bg-neutral w-56 h-fit gap-1">
 		{#each suggestedItems as tag}
 			<li>
-				<button class:active={filter === tag} data-tag={tag} on:click={itemHandler} class="p-1"
-					>{tag}</button>
+				<button class:active={filter === tag} data-tag={tag} on:click={itemHandler} class="p-2"
+					>{tag.split(/(?=[A-Z])/).join(' ')}</button>
 			</li>
 		{/each}
 	</ul>
 	<!-- Items -->
-	<section class="w-full">
+	<section class="w-full flex flex-wrap">
 		{#if !filter}
 			{#each items as item}
-				<p>{item.name}</p>
+				<div>
+					<div class="avatar">
+						<div class="w-32 rounded">
+							<img
+								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+								alt={item.name}
+								loading="lazy" />
+						</div>
+					</div>
+					<p>{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+				</div>
 			{/each}
 		{:else}
 			{#each filteredItems as item}
-				<p>{item.name}</p>
+				<div class="flex">
+					<div class="avatar">
+						<div class="w-32 rounded">
+							<img
+								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+								alt={item.name}
+								loading="lazy" />
+						</div>
+					</div>
+					<p>{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+				</div>
 			{/each}
 		{/if}
 	</section>

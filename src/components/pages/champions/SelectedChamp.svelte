@@ -22,8 +22,8 @@
 	}
 
 	onMount(() => {
-		console.log(selectedChampion)
-		console.log(items)
+		// console.log(selectedChampion)
+		// console.log(items)
 	})
 </script>
 
