@@ -9,7 +9,7 @@
 
 	const itemHandler = (e: any) => {
 		const tag = e.target.dataset.tag
-
+		filteredItems = []
 		if (filter === tag) {
 			filter = ''
 			filteredItems = []
@@ -18,6 +18,10 @@
 
 		filter = tag
 		filteredItems = items.filter((item: { tags: string | string[] }) => item.tags.includes(filter))
+	}
+
+	const singleItemHandler = (item: any) => {
+		console.log(item)
 	}
 
 	onMount(() => {
@@ -32,7 +36,7 @@
 	})
 </script>
 
-<section id="items" class="flex gap-4">
+<section id="items" class="flex gap-4 h-full">
 	<!-- filter -->
 	<ul class="menu bg-neutral w-56 h-fit gap-1">
 		{#each suggestedItems as tag}
@@ -43,34 +47,38 @@
 		{/each}
 	</ul>
 	<!-- Items -->
-	<section class="w-full flex flex-wrap">
+	<section class="w-full flex h-full flex-wrap gap-[12px]">
 		{#if !filter}
 			{#each items as item}
-				<div>
-					<div class="avatar">
-						<div class="w-32 rounded">
+				<button
+					on:click={() => singleItemHandler(item)}
+					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+					<div class="avatar w-full pointer-events-none">
+						<div class="w-full rounded border border-primary">
 							<img
 								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
 								alt={item.name}
 								loading="lazy" />
 						</div>
 					</div>
-					<p>{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-				</div>
+					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+				</button>
 			{/each}
 		{:else}
 			{#each filteredItems as item}
-				<div class="flex">
-					<div class="avatar">
-						<div class="w-32 rounded">
+				<button
+					on:click={() => singleItemHandler(item)}
+					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+					<div class="avatar w-full pointer-events-none">
+						<div class="w-full rounded border border-primary">
 							<img
 								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
 								alt={item.name}
 								loading="lazy" />
 						</div>
 					</div>
-					<p>{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-				</div>
+					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+				</button>
 			{/each}
 		{/if}
 	</section>
