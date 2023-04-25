@@ -26,6 +26,7 @@
 
 	onMount(() => {
 		filteredItems = items.filter((item: { tags: string | string[] }) => item.tags.includes(filter))
+		//! make dynamic
 		suggestedItems = recommendedItems('Fighter')
 
 		selectedChampion.tags.forEach((tag: any) => {
