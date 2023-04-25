@@ -12,15 +12,16 @@
 	let filteredChampions: any[]
 	let filter: string
 	let champTags: any[]
-	let itemTags: any[]
+	// let itemTags: any[]
 	let selectedChampion: any
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		items = Object.values(leagueAPI.items.data).map((item) => item)
-		itemTags = [...new Set(items.map((tag: any) => tag.tags).flat())]
+		// itemTags = [...new Set(items.map((tag: any) => tag.tags).flat())]
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
+		console.log(champTags)
 	})
 
 	const buttonHndlr = async (event: any) => {
@@ -52,7 +53,7 @@
 </script>
 
 <main class="w-full max-w-6xl p-4 text-white mx-auto">
-	<div class="flex h-1/2">
+	<div class="flex h-full">
 		<section id="champions" class="w-96 h-[800px] bg-base-300 p-2 rounded-lg rounded-r-none">
 			<FilterChampions {filterHandler} {filter} />
 			<div class="divider m-0 h-[3%]" />
@@ -70,10 +71,10 @@
 		</section>
 
 		<!-- Chosen Champion -->
-		<section class="bg-neutral w-full h-[800px] rounded-r-xl overflow-auto">
+		<section class="w-full h-full rounded-r-xl">
 			<!-- Toggled Champion -->
 			{#if selectedChampion}
-				<SelectedChamp {selectedChampion} {items} {itemTags} />
+				<SelectedChamp {selectedChampion} {items} />
 			{:else}
 				<ChampionDefaultPage />
 			{/if}

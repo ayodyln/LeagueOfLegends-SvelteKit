@@ -60,3 +60,151 @@ export const colorBadgeHandler = (tag: string) => {
 			return ''
 	}
 }
+
+export const recommendedItems = (type: any) => {
+	switch (type) {
+		case 'Fighter':
+			return [
+				'Boots',
+				'Armor',
+				'LifeSteal',
+				'SpellVamp',
+				'Jungle',
+				'Damage',
+				'AttackSpeed',
+				'OnHit',
+				'Trinket',
+				'Vision',
+				'Tenacity',
+				'Lane',
+				'Consumable'
+			]
+
+		case 'Tank':
+			return [
+				'Boots',
+				'ManaRegen',
+				'HealthRegen',
+				'Health',
+				'Mana',
+				'Armor',
+				'SpellBlock',
+				'Jungle',
+				'Lane',
+				'Trinket',
+				'Vision',
+				'AbilityHaste',
+				'Tenacity',
+				'MagicResist',
+				'Consumable'
+			]
+
+		case 'Mage':
+			return [
+				'Boots',
+				'ManaRegen',
+				'SpellDamage',
+				'SpellBlock',
+				'Damage',
+				'AbilityHaste',
+				'Lane',
+				'Trinket',
+				'Vision',
+				'Consumable',
+				'Aura',
+				'Slow',
+				'MagicPenetration',
+				'SpellVamp'
+			]
+
+		case 'Assassin':
+			return [
+				'Boots',
+				'CriticalStrike',
+				'Armor',
+				'Mana',
+				'SpellBlock',
+				'SpelLVamp',
+				'Jungle',
+				'AbilityHaste',
+				'CooldownReduction',
+				'OnHit',
+				'MagicResist',
+				'ArmorPenetration',
+				'MagicPenetration'
+			]
+
+		case 'Marksman':
+			return [
+				'Boots',
+				'ManaRegen',
+				'CriticalStrike',
+				'Mana',
+				'LifeSteal',
+				'Damage',
+				'Lane',
+				'AttackSpeed',
+				'OnHit',
+				'Trinket',
+				'Consumable',
+				'Vision',
+				'ArmorPenetration'
+			]
+
+		case 'Support':
+			return [
+				'Boots',
+				'ManaRegen',
+				'HealthRegen',
+				'Health',
+				'Mana',
+				'Armor',
+				'SpellBlock',
+				'Lane',
+				'Trinket',
+				'Vision',
+				'AbilityHaste',
+				'GoldPer',
+				'Slow',
+				'Aura',
+				'MagicResist'
+			]
+
+		default:
+			return []
+	}
+}
+
+// ;[
+// 	'Boots',
+// 	'ManaRegen',
+// 	'HealthRegen',
+// 	'Health',
+// 	'CriticalStrike',
+// 	'SpellDamage',
+// 	'Mana',
+// 	'Armor',
+// 	'SpellBlock',
+// 	'LifeSteal',
+// 	'SpellVamp',
+// 	'Jungle',
+// 	'Damage',
+// 	'Lane',
+// 	'AttackSpeed',
+// 	'OnHit',
+// 	'Trinket',
+// 	'Active',
+// 	'Consumable',
+// 	'Stealth',
+// 	'Vision',
+// 	'CooldownReduction',
+// 	'NonbootsMovement',
+// 	'AbilityHaste',
+// 	'Tenacity',
+// 	'MagicPenetration',
+// 	'ArmorPenetration',
+// 	'Aura',
+// 	'Slow',
+// 	'GoldPer',
+// 	'MagicResist'
+// ]

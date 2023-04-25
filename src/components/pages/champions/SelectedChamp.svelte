@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte'
 	import Items from './Items.svelte'
 
-	export let selectedChampion: any, items: any, itemTags: any
+	export let selectedChampion: any, items: any
 
 	const favHandler = () => {
 		const favs = JSON.parse($favorites)
@@ -24,7 +24,6 @@
 	onMount(() => {
 		console.log(selectedChampion)
 		console.log(items)
-		console.log(itemTags)
 	})
 </script>
 
@@ -146,6 +145,6 @@
 
 		<div class="divider h-0 m-0" />
 
-		<Items {itemTags} {items} />
+		<Items {items} {selectedChampion} />
 	</div>
 </section>
