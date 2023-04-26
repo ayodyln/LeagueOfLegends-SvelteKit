@@ -7,7 +7,7 @@
 	let filteredItems: any = []
 	let itemTags: any = []
 
-	const itemHandler = (tag) => {
+	const itemHandler = (tag: any) => {
 		filteredItems = []
 
 		if (filter === tag) {
@@ -30,21 +30,25 @@
 
 	onMount(async () => {
 		const { items } = await leagueChampions()
-		leagueItems = Object.values(items.data).map((item) => item)
-		// console.log(leagueItems)
+		leagueItems = Object.values(items.data)
+			.map((item) => item)
+			.filter((item: any) => !item.hasOwnProperty('inStore'))
 
 		filteredItems = leagueItems.filter((item: any) => item.tags.includes(filter))
-
 		itemTags = [...new Set(leagueItems.map((item: any) => item.tags).flat())]
 	})
 </script>
 
 <main class="w-full max-w-6xl p-4 text-white mx-auto flex gap-2 h-full">
-	<ul class="menu bg-neutral w-56 h-fit gap-1 p-1">
+	<ul class="menu bg-neutral w-56 h-fit gap-1">
 		{#each itemTags as item}
 			<li>
-				<button class:active={filter === item.name} on:click={() => itemHandler(item)} class="p-[6px]"
-					>{item.split(/(?=[A-Z])/).join(' ')}</button>
+				<button
+					class:active={filter === item}
+					on:click={() => itemHandler(item)}
+					class="p-[6px]">
+					{item.split(/(?=[A-Z])/).join(' ')}
+				</button>
 			</li>
 		{/each}
 	</ul>
