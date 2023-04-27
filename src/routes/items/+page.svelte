@@ -43,10 +43,7 @@
 	<ul class="menu bg-neutral w-56 h-fit gap-1">
 		{#each itemTags as item}
 			<li>
-				<button
-					class:active={filter === item}
-					on:click={() => itemHandler(item)}
-					class="p-[6px]">
+				<button class:active={filter === item} on:click={() => itemHandler(item)} class="p-[6px]">
 					{item.split(/(?=[A-Z])/).join(' ')}
 				</button>
 			</li>
