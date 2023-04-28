@@ -32,8 +32,6 @@
 		selectedChampion.tags.forEach((tag: any) => {
 			suggestedItems = [...new Set([...suggestedItems, ...recommendedItems(tag)])]
 		})
-
-		console.log(items)
 	})
 </script>
 
