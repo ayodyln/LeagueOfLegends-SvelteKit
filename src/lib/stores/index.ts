@@ -3,7 +3,7 @@ import { writable } from 'svelte/store'
 
 // This configuration maintains data, even on reloads/refresh.
 
-const buildChampion = {
+export const buildChampion = {
 	id: '',
 	champion: {
 		name: '',
@@ -21,7 +21,9 @@ favorites.subscribe((value: any) => {
 	if (browser) window.localStorage.setItem('favorites', value)
 })
 
-const initBuild: any = browser ? window.localStorage.getItem('build') : buildChampion
+const initBuild: any = browser
+	? window.localStorage.getItem('build')
+	: JSON.stringify(buildChampion)
 
 export const build = writable(initBuild)
 

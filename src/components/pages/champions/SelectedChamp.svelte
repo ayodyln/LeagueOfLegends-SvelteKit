@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { build } from '$lib/stores'
+	import { build, buildChampion } from '$lib/stores'
 	import Stats from './Stats.svelte'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import { onMount } from 'svelte'
@@ -11,8 +11,8 @@
 	const buildHandler = (champion: object) => {
 		// console.log('Addeding Champ to buld....')
 		// console.log(champion)
+		// $build = JSON.stringify(buildChampion)
 		console.log($build)
-
 	}
 
 	onMount(() => {
