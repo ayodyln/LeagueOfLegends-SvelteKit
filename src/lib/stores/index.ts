@@ -11,6 +11,7 @@ export const buildChampion = {
 		type: []
 	},
 	items: [],
+	boots: {},
 	summoners: []
 }
 

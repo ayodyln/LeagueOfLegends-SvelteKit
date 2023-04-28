@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte'
 	import { recommendedItems } from '$lib/league-of-legends/champions'
 	import { build, buildChampion } from '$lib/stores'
-	import { indexOf } from 'underscore'
 	export let items: any, selectedChampion: any
 
 	let filter = 'Boots'
@@ -19,32 +18,48 @@
 		}
 
 		filter = tag
-		filteredItems = items.filter((item: { tags: string | string[] }) => item.tags.includes(filter))
+		filteredItems = items.filter(
+			(item: { tags: string | string[]; name: string }) =>
+				item.tags.includes(filter) && item.name !== 'Boots'
+		)
 	}
 
 	const singleItemHandler = (item: any) => {
-		const myBuild = JSON.parse($build)
 		console.log(item)
-
-		const checkItemState = myBuild.items.some((i) => i.name === item.name)
+		const myBuild = JSON.parse($build)
 
 		if (myBuild.length === 6) {
 			console.error('MAX ITEMS')
 			return
 		}
 
+		if (item.tags.includes('Boots')) {
+			const checkBootState = myBuild.boots
+			if (checkBootState.name) {
+				myBuild.boots = {}
+				$build = JSON.stringify(myBuild)
+			} else {
+				myBuild.boots = item
+				$build = JSON.stringify(myBuild)
+			}
+			return
+		}
+
+		const checkItemState = myBuild.items.some((i) => i.name === item.name)
 		if (checkItemState) {
-			myBuild.items = myBuild.items.filter((i) => i.name !== item.name)
+			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
 			$build = JSON.stringify(myBuild)
 		} else {
-			console.log('no duplicate')
 			myBuild.items = [...myBuild.items, item]
 			$build = JSON.stringify(myBuild)
 		}
 	}
 
 	onMount(() => {
-		filteredItems = items.filter((item: { tags: string | string[] }) => item.tags.includes(filter))
+		filteredItems = items.filter(
+			(item: { tags: string | string[]; name: string }) =>
+				item.tags.includes(filter) && item.name !== 'Boots'
+		)
 		//! make dynamic
 		suggestedItems = recommendedItems('Fighter')
 
@@ -86,6 +101,8 @@
 			{#each filteredItems as item}
 				{#if !item.hasOwnProperty('inStore')}
 					<button
+						class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
+							JSON.parse($build).boots.name === item.name}
 						on:click={() => singleItemHandler(item)}
 						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 						<div class="avatar w-full pointer-events-none">

@@ -23,6 +23,8 @@
 				{#each myBuild.items as item}
 					<p>{item.name}</p>
 				{/each}
+
+				<p>{myBuild.boots.name}</p>
 			</div>
 
 			<!-- Summoner -->
