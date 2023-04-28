@@ -174,37 +174,3 @@ export const recommendedItems = (type: any) => {
 			return []
 	}
 }
-
-// ;[
-// 	'Boots',
-// 	'ManaRegen',
-// 	'HealthRegen',
-// 	'Health',
-// 	'CriticalStrike',
-// 	'SpellDamage',
-// 	'Mana',
-// 	'Armor',
-// 	'SpellBlock',
-// 	'LifeSteal',
-// 	'SpellVamp',
-// 	'Jungle',
-// 	'Damage',
-// 	'Lane',
-// 	'AttackSpeed',
-// 	'OnHit',
-// 	'Trinket',
-// 	'Active',
-// 	'Consumable',
-// 	'Stealth',
-// 	'Vision',
-// 	'CooldownReduction',
-// 	'NonbootsMovement',
-// 	'AbilityHaste',
-// 	'Tenacity',
-// 	'MagicPenetration',
-// 	'ArmorPenetration',
-// 	'Aura',
-// 	'Slow',
-// 	'GoldPer',
-// 	'MagicResist'
-// ]

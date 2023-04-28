@@ -18,24 +18,23 @@
 		}
 
 		filter = tag
-		filteredItems = items.filter(
-			(item: { tags: string | string[]; name: string }) =>
+		// console.log(items)
+		filteredItems = items.filter((item: any) => {
+			if (
 				item.tags.includes(filter) &&
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
-				!item.hasOwnProperty('into')
-		)
+				item.name !== `Kalista's Black Spear`
+			) {
+				return item
+			}
+		})
 	}
 
 	const singleItemHandler = (item: any) => {
 		console.log(item)
 		const myBuild = JSON.parse($build)
-
-		if (myBuild.length === 6) {
-			console.error('MAX ITEMS')
-			return
-		}
 
 		if (item.tags.includes('Boots')) {
 			const checkBootState = myBuild.boots
@@ -67,10 +66,11 @@
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
-				!item.hasOwnProperty('into')
+				item.name !== `Kalista's Black Spear`
 		)
+
 		//! make dynamic
-		suggestedItems = recommendedItems('Fighter')
+		suggestedItems = recommendedItems(selectedChampion.tags)
 
 		selectedChampion.tags.forEach((tag: any) => {
 			suggestedItems = [...new Set([...suggestedItems, ...recommendedItems(tag)])]

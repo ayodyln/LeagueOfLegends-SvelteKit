@@ -14,7 +14,7 @@
 
 <main class="w-full max-w-5xl m-auto flex-grow p-4 flex gap-4">
 	{#if myBuild}
-		<div class="rounded-lg overflow-hidden w-96">
+		<div class="rounded-lg overflow-hidden w-96 shadow-xl h-fit">
 			<img
 				src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{myBuild.champion
 					.id}_0.jpg"
@@ -41,13 +41,42 @@
 			</div>
 
 			<!-- Items -->
-			<div>
-				{#each myBuild.items as item}
-					<p>{item.name}</p>
-				{/each}
+			<div class="flex flex-col gap-2">
+				<section class="flex gap-4">
+					{#each myBuild.items as item}
+						<button
+							on:click={() => {}}
+							class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+							<div class="avatar w-full pointer-events-none">
+								<div class="w-full rounded border border-primary">
+									<img
+										src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+										alt={item.name}
+										loading="lazy" />
+								</div>
+							</div>
+							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+						</button>
+					{/each}
+				</section>
+
+				<div class="divider m-0" />
 
 				{#if myBuild.boots.name}
-					<span>Boots: {myBuild.boots.name}</span>
+					<button
+						on:click={() => {}}
+						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+						<div class="avatar w-full pointer-events-none">
+							<div class="w-full rounded border border-primary">
+								<img
+									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{myBuild.boots.image
+										.full}"
+									alt={myBuild.boots.name}
+									loading="lazy" />
+							</div>
+						</div>
+						<p class="text-xs pointer-events-none">{myBuild.boots.name}</p>
+					</button>
 				{/if}
 			</div>
 

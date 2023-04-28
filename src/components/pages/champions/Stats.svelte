@@ -3,7 +3,7 @@
 	//
 </script>
 
-<div class="stats shadow w-full bg-neutral text-neutral-contentf">
+<div class="stats shadow-md w-full bg-neutral text-neutral-contentf">
 	<div class="stat w-10">
 		<div class="stat-title flex items-center gap-2">
 			<span class="text-md">HP</span>
