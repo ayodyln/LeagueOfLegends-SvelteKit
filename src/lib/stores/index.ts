@@ -7,7 +7,8 @@ export const buildChampion = {
 	id: '',
 	champion: {
 		name: '',
-		spells: []
+		abilities: [],
+		type: []
 	},
 	items: [],
 	summoners: []

@@ -2,23 +2,20 @@
 	import { build, buildChampion } from '$lib/stores'
 	import Stats from './Stats.svelte'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
-	import { onMount } from 'svelte'
 	import Items from './Items.svelte'
 	import ChampionSplashArt from './ChampionSplashArt.svelte'
 
 	export let selectedChampion: any, items: any
 
-	const buildHandler = (champion: object) => {
-		// console.log('Addeding Champ to buld....')
-		// console.log(champion)
-		// $build = JSON.stringify(buildChampion)
-		console.log($build)
+	const buildHandler = (champion: any) => {
+		$build = JSON.stringify(buildChampion)
+		const buildObject = JSON.parse($build)
+		buildObject.id = champion.id
+		buildObject.champion.name = champion.name
+		buildObject.champion.abilities = champion.spells
+		buildObject.champion.type = champion.tags
+		$build = JSON.stringify(buildObject)
 	}
-
-	onMount(() => {
-		// console.log(selectedChampion)
-		// console.log(items)
-	})
 </script>
 
 <ChampionSplashArt {selectedChampion} />
