@@ -3,7 +3,20 @@
 	import { build } from '$lib/stores'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import Stats from '../../components/pages/champions/Stats.svelte'
+
 	let myBuild: any
+
+	const removeItemHandler = (item: any) => {
+		console.log(item)
+
+		if (item.tags.includes('Boots')) {
+			myBuild.boots = {}
+			$build = JSON.stringify(myBuild)
+		} else {
+			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
+			$build = JSON.stringify(myBuild)
+		}
+	}
 
 	onMount(() => {
 		console.log(JSON.parse($build))
@@ -44,9 +57,8 @@
 			<div class="flex flex-col gap-2">
 				<section class="flex gap-4">
 					{#each myBuild.items as item}
-						<button
-							on:click={() => {}}
-							class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+						<div
+							class="flex flex-col justify-between w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 							<div class="avatar w-full pointer-events-none">
 								<div class="w-full rounded border border-primary">
 									<img
@@ -55,16 +67,20 @@
 										loading="lazy" />
 								</div>
 							</div>
-							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-						</button>
+							<p class="text-xs pointer-events-none text-center">
+								{item.name.split(/(?=[A-Z])/).join(' ')}
+							</p>
+
+							<button on:click={() => removeItemHandler(item)} class="btn btn-xs hover:text-error"
+								>Remove</button>
+						</div>
 					{/each}
 				</section>
 
 				<div class="divider m-0" />
 
 				{#if myBuild.boots.name}
-					<button
-						on:click={() => {}}
+					<div
 						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 						<div class="avatar w-full pointer-events-none">
 							<div class="w-full rounded border border-primary">
@@ -75,8 +91,12 @@
 									loading="lazy" />
 							</div>
 						</div>
-						<p class="text-xs pointer-events-none">{myBuild.boots.name}</p>
-					</button>
+						<p class="text-xs pointer-events-none text-center">{myBuild.boots.name}</p>
+
+						<button
+							on:click={() => removeItemHandler(myBuild.boots)}
+							class="btn btn-xs hover:text-error">Remove</button>
+					</div>
 				{/if}
 			</div>
 
