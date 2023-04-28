@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { favorites } from '$lib/stores'
+	import { favorites, build } from '$lib/stores'
 
 	import Stats from './Stats.svelte'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
@@ -45,11 +45,13 @@
 			</div>
 		{/each}
 	</div>
+
 	<div class="flex justify-center w-full py-1 gap-2">
 		{#each selectedChampion.skins as skin, i}
 			<a href="#item{i}" class="btn btn-xs btn-ghost">{i + 1}</a>
 		{/each}
 	</div>
+	
 	<button
 		on:click={favHandler}
 		class="w-8 absolute top-2 right-2 cursor-pointer hover:opacity-50 {JSON.parse(
