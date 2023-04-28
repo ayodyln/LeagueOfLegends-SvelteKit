@@ -2,13 +2,12 @@
 	import { onMount } from 'svelte'
 	import { recommendedItems } from '$lib/league-of-legends/champions'
 	import { build, buildChampion } from '$lib/stores'
+	import { indexOf } from 'underscore'
 	export let items: any, selectedChampion: any
 
 	let filter = 'Boots'
 	let filteredItems: any = []
 	let suggestedItems: any[] = []
-
-	$: myItems = JSON.parse($build).items
 
 	const itemHandler = (e: any) => {
 		const tag = e.target.dataset.tag
@@ -25,24 +24,23 @@
 
 	const singleItemHandler = (item: any) => {
 		const myBuild = JSON.parse($build)
+		console.log(item)
+
+		const checkItemState = myBuild.items.some((i) => i.name === item.name)
 
 		if (myBuild.length === 6) {
 			console.error('MAX ITEMS')
 			return
 		}
 
-		$build = JSON.stringify(myBuild)
-
-		if (myBuild.items.find((item: any) => item.name)) {
-			console.log('Item Already Selected, removing...')
-			myBuild.items = myBuild.items.filter((item: any) => !item.name)
+		if (checkItemState) {
+			myBuild.items = myBuild.items.filter((i) => i.name !== item.name)
 			$build = JSON.stringify(myBuild)
-			return
+		} else {
+			console.log('no duplicate')
+			myBuild.items = [...myBuild.items, item]
+			$build = JSON.stringify(myBuild)
 		}
-
-		myBuild.items = [...myBuild.items, item]
-
-		$build = JSON.stringify(myBuild)
 	}
 
 	onMount(() => {
@@ -86,20 +84,21 @@
 			{/each}
 		{:else}
 			{#each filteredItems as item}
-				<button
-					class:ring={myItems.find((i) => i.name === item.name)}
-					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
-					<div class="avatar w-full pointer-events-none">
-						<div class="w-full rounded border border-primary">
-							<img
-								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
-								alt={item.name}
-								loading="lazy" />
+				{#if !item.hasOwnProperty('inStore')}
+					<button
+						on:click={() => singleItemHandler(item)}
+						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+						<div class="avatar w-full pointer-events-none">
+							<div class="w-full rounded border border-primary">
+								<img
+									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+									alt={item.name}
+									loading="lazy" />
+							</div>
 						</div>
-					</div>
-					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-				</button>
+						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+					</button>
+				{/if}
 			{/each}
 		{/if}
 	</section>
