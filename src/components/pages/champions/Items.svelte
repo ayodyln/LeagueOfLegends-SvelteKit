@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { recommendedItems } from '$lib/league-of-legends/champions'
-	import { build, buildChampion } from '$lib/stores'
+	import { build } from '$lib/stores'
 	export let items: any, selectedChampion: any
 
 	let filter = 'Boots'
@@ -20,7 +20,11 @@
 		filter = tag
 		filteredItems = items.filter(
 			(item: { tags: string | string[]; name: string }) =>
-				item.tags.includes(filter) && item.name !== 'Boots'
+				item.tags.includes(filter) &&
+				item.name !== 'Boots' &&
+				item.name !== 'The Golden Spatula' &&
+				item.name !== 'Scarecrow Effigy' &&
+				!item.hasOwnProperty('into')
 		)
 	}
 
@@ -35,18 +39,19 @@
 
 		if (item.tags.includes('Boots')) {
 			const checkBootState = myBuild.boots
+
 			if (checkBootState.name) {
 				myBuild.boots = {}
 				$build = JSON.stringify(myBuild)
-			} else {
-				myBuild.boots = item
-				$build = JSON.stringify(myBuild)
+				return
 			}
+
+			myBuild.boots = item
+			$build = JSON.stringify(myBuild)
 			return
 		}
 
-		const checkItemState = myBuild.items.some((i) => i.name === item.name)
-		if (checkItemState) {
+		if (myBuild.items.some((i: any) => i.name === item.name)) {
 			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
 			$build = JSON.stringify(myBuild)
 		} else {
@@ -58,7 +63,11 @@
 	onMount(() => {
 		filteredItems = items.filter(
 			(item: { tags: string | string[]; name: string }) =>
-				item.tags.includes(filter) && item.name !== 'Boots'
+				item.tags.includes(filter) &&
+				item.name !== 'Boots' &&
+				item.name !== 'The Golden Spatula' &&
+				item.name !== 'Scarecrow Effigy' &&
+				!item.hasOwnProperty('into')
 		)
 		//! make dynamic
 		suggestedItems = recommendedItems('Fighter')
