@@ -10,10 +10,7 @@
 	const addChampToBuild = (champion: any) => {
 		$build = JSON.stringify(buildChampion)
 		const buildObject = JSON.parse($build)
-		buildObject.id = champion.id
-		buildObject.champion.name = champion.name
-		buildObject.champion.abilities = champion.spells
-		buildObject.champion.type = champion.tags
+		buildObject.champion = champion
 		$build = JSON.stringify(buildObject)
 	}
 </script>

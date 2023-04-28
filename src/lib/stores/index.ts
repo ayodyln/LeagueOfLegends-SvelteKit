@@ -4,7 +4,6 @@ import { writable } from 'svelte/store'
 // This configuration maintains data, even on reloads/refresh.
 
 export const buildChampion = {
-	id: '',
 	champion: {
 		name: '',
 		abilities: [],

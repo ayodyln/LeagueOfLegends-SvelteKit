@@ -41,7 +41,7 @@
 			const checkBootState = myBuild.boots
 
 			if (checkBootState.name) {
-				myBuild.boots = {}
+				myBuild.boots = item
 				$build = JSON.stringify(myBuild)
 				return
 			}
