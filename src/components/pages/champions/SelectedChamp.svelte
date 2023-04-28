@@ -7,7 +7,7 @@
 
 	export let selectedChampion: any, items: any
 
-	const buildHandler = (champion: any) => {
+	const addChampToBuild = (champion: any) => {
 		$build = JSON.stringify(buildChampion)
 		const buildObject = JSON.parse($build)
 		buildObject.id = champion.id
@@ -28,7 +28,7 @@
 				<h3 class="text-xs font-extralight capitalize">{selectedChampion.title}</h3>
 			</span>
 
-			<button class="btn btn-primary" on:click={() => buildHandler(selectedChampion)}
+			<button class="btn btn-primary" on:click={() => addChampToBuild(selectedChampion)}
 				>Add to Build</button>
 		</div>
 

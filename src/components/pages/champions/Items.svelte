@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { recommendedItems } from '$lib/league-of-legends/champions'
+	import { build, buildChampion } from '$lib/stores'
 	export let items: any, selectedChampion: any
 
 	let filter = 'Boots'
 	let filteredItems: any = []
 	let suggestedItems: any[] = []
+
+	$: myItems = JSON.parse($build).items
 
 	const itemHandler = (e: any) => {
 		const tag = e.target.dataset.tag
@@ -21,7 +24,25 @@
 	}
 
 	const singleItemHandler = (item: any) => {
-		console.log(item)
+		const myBuild = JSON.parse($build)
+
+		if (myBuild.length === 6) {
+			console.error('MAX ITEMS')
+			return
+		}
+
+		$build = JSON.stringify(myBuild)
+
+		if (myBuild.items.find((item: any) => item.name)) {
+			console.log('Item Already Selected, removing...')
+			myBuild.items = myBuild.items.filter((item: any) => !item.name)
+			$build = JSON.stringify(myBuild)
+			return
+		}
+
+		myBuild.items = [...myBuild.items, item]
+
+		$build = JSON.stringify(myBuild)
 	}
 
 	onMount(() => {
@@ -66,6 +87,7 @@
 		{:else}
 			{#each filteredItems as item}
 				<button
+					class:ring={myItems.find((i) => i.name === item.name)}
 					on:click={() => singleItemHandler(item)}
 					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 					<div class="avatar w-full pointer-events-none">
