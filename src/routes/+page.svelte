@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import RecentChamp from '../components/RecentChamp.svelte'
+	import { build, buildChampion } from '$lib/stores'
 	import { leagueChampions, recentChampions } from '$lib/league-of-legends/champions'
 
 	let newChampions: any = {}
@@ -8,6 +9,10 @@
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		newChampions = await recentChampions(leagueAPI.champions)
+
+		if (!JSON.parse($build).name) {
+			$build = JSON.stringify(buildChampion)
+		}
 	})
 </script>
 
