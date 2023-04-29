@@ -6,9 +6,6 @@ const config = {
 	kit: {
 		adapter: adapter()
 	},
-	vite: {
-		sourcemap: true
-	},
 	preprocess: vitePreprocess()
 }
 
