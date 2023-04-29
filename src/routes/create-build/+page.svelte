@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { build, buildChampion } from '$lib/stores'
+	import { build, buildChampion, builds } from '$lib/stores'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import Stats from '../../components/pages/champions/Stats.svelte'
 
 	let myBuild: any = buildChampion
 
 	const removeItemHandler = (item: any) => {
-		console.log(item)
-
 		if (item.tags.includes('Boots')) {
 			myBuild.boots = {}
 			$build = JSON.stringify(myBuild)
@@ -23,10 +21,17 @@
 		$build = JSON.stringify(myBuild)
 	}
 
-	const summonerBuildHandler = (summoner) => {
-		console.log(summoner)
+	const saveBuildHandler = () => {
+		let localBuilds = JSON.parse($builds)
+		if (!localBuilds) $builds = JSON.stringify([])
+		$builds = JSON.stringify([...localBuilds, myBuild])
 
-		myBuild.summoners = myBuild.summoners.filter((spell) => spell.name !== summoner.name)
+		myBuild = buildChampion
+		$build = JSON.stringify(buildChampion)
+	}
+
+	const summonerBuildHandler = (summoner: any) => {
+		myBuild.summoners = myBuild.summoners.filter((spell: any) => spell.name !== summoner.name)
 		$build = JSON.stringify(myBuild)
 	}
 
@@ -145,6 +150,10 @@
 						</div>
 					</div>
 				{/each}
+			</div>
+
+			<div class="mt-10">
+				<button on:click={saveBuildHandler} class="btn btn-success">Save Build</button>
 			</div>
 		</section>
 	{:else}

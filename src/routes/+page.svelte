@@ -1,20 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import RecentChamp from '../components/RecentChamp.svelte'
-	import { build, buildChampion } from '$lib/stores'
+	import { build, buildChampion, builds } from '$lib/stores'
 	import { leagueChampions, recentChampions } from '$lib/league-of-legends/champions'
 
 	let newChampions: any = {}
+	let localBuilds: any = []
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
 		newChampions = await recentChampions(leagueAPI.champions)
-
-		// FIX THIS ERROR SITE WIDE THEN FINISH LAST FEATURES
-		const buildModel = $build ? JSON.parse($build) : null
-		if (!buildModel || !buildModel.hasOwnProperty('champion')) {
-			$build = JSON.stringify(buildChampion)
-		}
+		localBuilds = JSON.parse($builds)
+		console.log(localBuilds)
 	})
 </script>
 
@@ -26,5 +23,13 @@
 	<section class="font-sans">
 		<RecentChamp recents={newChampions.recents} />
 		<div class="divider m-0 mt-3" />
+
+		<div>
+			<h2>Recent Builds</h2>
+
+			{#each localBuilds as build}
+				<p>{build.champion.name}</p>
+			{/each}
+		</div>
 	</section>
 </main>

@@ -36,10 +36,6 @@
 				<li>
 					<a class:active={route === '/spells'} href="/spells">Spells</a>
 				</li>
-
-				<li>
-					<a class:active={route === '/builds'} href="/builds">Builds</a>
-				</li>
 			</ul>
 		</div>
 
@@ -60,10 +56,6 @@
 
 			<li>
 				<a class:active={route === '/spells'} href="/spells">Spells</a>
-			</li>
-
-			<li>
-				<a class:active={route === '/builds'} href="/builds">Builds</a>
 			</li>
 		</ul>
 	</div>

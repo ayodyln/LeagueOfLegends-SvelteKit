@@ -15,9 +15,7 @@
 		$build = JSON.stringify(buildObject)
 	}
 
-	onMount(() => {
-
-	})
+	onMount(() => {})
 </script>
 
 <ChampionSplashArt {selectedChampion} />
@@ -30,8 +28,13 @@
 				<h3 class="text-xs font-extralight capitalize">{selectedChampion.title}</h3>
 			</span>
 
-			<button class="btn btn-primary" on:click={() => addChampToBuild(selectedChampion)}
-				>Add to Build</button>
+			{#if !JSON.parse($build).champion.name || JSON.parse($build).champion.name !== selectedChampion.name}
+				<button class="btn btn-primary" on:click={() => addChampToBuild(selectedChampion)}
+					>Add to Build</button>
+			{:else}
+				<button class="btn btn-disabled" on:click={() => addChampToBuild(selectedChampion)}
+					>Added</button>
+			{/if}
 		</div>
 
 		<span class="flex gap-3">
@@ -53,8 +56,8 @@
 			<div class="w-full h-24 bg-neutral-focus rounded-lg flex">
 				<div class="h-full rounded overflow-hidden">
 					<img
-						src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/passive/{selectedChampion.passive
-							.image.full}"
+						src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/passive/{selectedChampion
+							.passive.image.full}"
 						alt="Tailwind-CSS-Avatar-component"
 						class="h-full" />
 				</div>
