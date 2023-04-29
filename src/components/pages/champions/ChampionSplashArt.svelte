@@ -8,20 +8,25 @@
 
 	const favHandler = () => {
 		const favs = JSON.parse($favorites)
+		console.log(favs)
 
 		if (favs.includes(selectedChampion.id)) {
 			$favorites = JSON.stringify([
 				...new Set(favs.filter((fav: string) => fav !== selectedChampion.id))
 			])
+			favoritesArray = [...new Set(favs.filter((fav: string) => fav !== selectedChampion.id))]
 			return
 		}
 
+		favoritesArray = [...favs, selectedChampion.id]
 		$favorites = JSON.stringify([...favs, selectedChampion.id])
 	}
 
 	onMount(() => {
 		favoritesArray = $favorites ? JSON.parse($favorites) : null
-		if (!favoritesArray) $favorites = JSON.stringify(['Aatrox'])
+		if (!favoritesArray) {
+			$favorites = JSON.stringify(favoritesArray)
+		}
 	})
 </script>
 
