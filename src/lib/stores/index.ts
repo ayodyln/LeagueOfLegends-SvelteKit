@@ -14,28 +14,26 @@ export const buildChampion = {
 	summoners: []
 }
 
-const initFavorites: any = browser ? window.localStorage.getItem('favorites') : ['Aatrox']
+const initFavorites = browser ? window.localStorage.getItem('favorites') : ['Aatrox']
 
 export const favorites = writable(initFavorites)
 
-favorites.subscribe((value: any) => {
+favorites.subscribe((value) => {
 	if (browser) window.localStorage.setItem('favorites', value)
 })
 
-const initBuild: any = browser
-	? window.localStorage.getItem('build')
-	: JSON.stringify(buildChampion)
+const initBuild = browser ? window.localStorage.getItem('build') : JSON.stringify(buildChampion)
 
 export const build = writable(initBuild)
 
-build.subscribe((value: any) => {
+build.subscribe((value) => {
 	if (browser) window.localStorage.setItem('build', value)
 })
 
-const initBuilds: any = browser ? window.localStorage.getItem('builds') : []
+const initBuilds = browser ? window.localStorage.getItem('builds') : []
 
 export const builds = writable(initBuilds)
 
-builds.subscribe((value: any) => {
+builds.subscribe((value) => {
 	if (browser) window.localStorage.setItem('builds', value)
 })

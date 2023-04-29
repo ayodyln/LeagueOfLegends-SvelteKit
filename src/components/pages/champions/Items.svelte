@@ -21,7 +21,7 @@
 		// console.log(items)
 		filteredItems = items.filter((item: any) => {
 			if (
-				item.tags.includes(filter) &&
+				// item.tags.includes(filter) &&
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
@@ -62,7 +62,7 @@
 	onMount(() => {
 		filteredItems = items.filter(
 			(item: { tags: string | string[]; name: string }) =>
-				item.tags.includes(filter) &&
+				// item.tags.includes(filter) &&
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
