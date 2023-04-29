@@ -24,7 +24,13 @@
 	const saveBuildHandler = () => {
 		let localBuilds = JSON.parse($builds)
 		if (!localBuilds) $builds = JSON.stringify([])
-		$builds = JSON.stringify([...localBuilds, myBuild])
+		$builds = JSON.stringify([
+			...localBuilds,
+			{
+				id: localBuilds.length,
+				...myBuild
+			}
+		])
 
 		myBuild = buildChampion
 		$build = JSON.stringify(buildChampion)
@@ -160,6 +166,7 @@
 		<section class="flex justify-center items-center flex-col w-full h-full gap-4">
 			<h1 class="text-xl font-bold">Please go choose a Champion to start a Build!</h1>
 			<a class="btn btn-success w-96" href="/champions">See Champions</a>
+			<a class="btn w-96" href="/">See Builds</a>
 		</section>
 	{/if}
 </main>
