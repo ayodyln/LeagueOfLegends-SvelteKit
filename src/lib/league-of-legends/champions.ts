@@ -31,7 +31,7 @@ export const leagueChampions = async () => {
 export const getRandomIconImage = async () => {
 	try {
 		const randomIcon = await fetch(
-			'http://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/profileicon.json'
+			'https://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/profileicon.json'
 		)
 		const icons = await randomIcon.json()
 		const iconArray = Object.values(icons.data)
