@@ -88,29 +88,14 @@
 	<section class="w-full flex flex-wrap h-fit p-2 gap-2 justify-center">
 		{#if !filter}
 			{#each leagueItems as item}
-				<button
-					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
-					<div class="avatar w-full pointer-events-none">
-						<div class="w-full rounded border border-primary">
-							<img
-								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
-								alt={item.name}
-								loading="lazy" />
-						</div>
-					</div>
-					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-				</button>
-			{/each}
-		{:else}
-			{#each filteredItems as item}
-				{#if !item.hasOwnProperty('inStore')}
+				<div class="w-[15%] flex flex-col items-center gap-1">
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<button
-						class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
-							JSON.parse($build).boots.name === item.name}
-						on:click={() => singleItemHandler(item)}
-						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
-						<div class="avatar w-full pointer-events-none">
+						on:click={(e) => {
+							singleItemHandler(item)
+						}}
+						class="flex flex-col w-full bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus h-56">
+						<div class="avatar w-full pointer-events-none p-2">
 							<div class="w-full rounded border border-primary">
 								<img
 									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
@@ -120,6 +105,46 @@
 						</div>
 						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
 					</button>
+					<button
+						type="button"
+						on:click={(e) => {
+							e.preventDefault()
+							console.log(item)
+						}}
+						class="btn btn-ghost btn-sm text-xs z-3">Item Info</button>
+				</div>
+			{/each}
+		{:else}
+			{#each filteredItems as item}
+				{#if !item.hasOwnProperty('inStore')}
+					<div class="w-[15%] flex flex-col items-center gap-1">
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<button
+							on:click={(e) => {
+								singleItemHandler(item)
+							}}
+							class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
+								JSON.parse($build).boots.name === item.name}
+							class="flex flex-col w-full bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus h-56">
+							<div class="avatar w-full pointer-events-none p-2">
+								<div class="w-full rounded border border-primary">
+									<img
+										src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+										alt={item.name}
+										loading="lazy" />
+								</div>
+							</div>
+							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+						</button>
+
+						<button
+							type="button"
+							on:click={(e) => {
+								e.preventDefault()
+								console.log(item)
+							}}
+							class="btn btn-ghost btn-sm text-xs z-3">Item Info</button>
+					</div>
 				{/if}
 			{/each}
 		{/if}
