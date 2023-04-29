@@ -4,10 +4,10 @@ import { vitePreprocess } from '@sveltejs/kit/vite'
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter(),
-		vite: {
-			sourcemap: true
-		}
+		adapter: adapter()
+	},
+	vite: {
+		sourcemap: true
 	},
 	preprocess: vitePreprocess()
 }

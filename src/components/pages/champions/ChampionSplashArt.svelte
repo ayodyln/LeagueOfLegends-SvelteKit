@@ -26,7 +26,7 @@
 					id={`item${i}`}
 					loading="lazy"
 					class="w-full"
-					src={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_${skin.num}.jpg`}
+					src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${selectedChampion.id}_${skin.num}.jpg`}
 					alt={skin.name} />
 				{#if i !== 0}
 					<span class="absolute z-1 bottom-0 left-0 bg-neutral bg-opacity-50 w-full p-2 font-bold"
