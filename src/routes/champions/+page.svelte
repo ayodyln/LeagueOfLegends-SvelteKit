@@ -29,7 +29,7 @@
 
 		try {
 			const champData = await fetch(
-				`http://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/champion/${event.target.dataset.id}.json`
+				`https://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/champion/${event.target.dataset.id}.json`
 			)
 			const res = await champData.json()
 			selectedChampion = Object.values(res.data)[0]
