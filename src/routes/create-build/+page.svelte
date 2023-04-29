@@ -3,6 +3,7 @@
 	import { build, buildChampion, builds } from '$lib/stores'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import Stats from '../../components/pages/champions/Stats.svelte'
+	import { goto } from '$app/navigation'
 
 	let myBuild: any = buildChampion
 
@@ -24,6 +25,14 @@
 	const saveBuildHandler = () => {
 		let localBuilds = JSON.parse($builds)
 		if (!localBuilds) $builds = JSON.stringify([])
+		if (localBuilds.some((b: any) => b.id === myBuild.id)) {
+			// EDIT THEN SAVE IF STATEMENT
+			localBuilds = localBuilds.filter((b: any) => b.id !== myBuild.id)
+			$builds = JSON.stringify([...localBuilds, myBuild])
+			goto('/')
+			return
+		}
+
 		$builds = JSON.stringify([
 			...localBuilds,
 			{
@@ -43,6 +52,8 @@
 
 	onMount(() => {
 		myBuild = JSON.parse($build)
+		console.log(JSON.parse($builds))
+		console.log(myBuild)
 	})
 </script>
 

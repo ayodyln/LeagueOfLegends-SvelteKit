@@ -3,7 +3,7 @@ import { writable } from 'svelte/store'
 
 // This configuration maintains data, even on reloads/refresh.
 
-export const buildChampion: championBuild = {
+export const buildChampion = {
 	champion: {
 		name: '',
 		abilities: [],
@@ -37,14 +37,3 @@ export const builds: any = writable(initBuilds)
 builds.subscribe((value: any) => {
 	if (browser) window.localStorage.setItem('builds', value)
 })
-
-interface championBuild {
-	champion: {
-		name: ''
-		abilities: []
-		type: []
-	}
-	items: []
-	boots: object
-	summoners: []
-}
