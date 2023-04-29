@@ -6,7 +6,7 @@
 
 	onMount(async () => {
 		const icon: any = await getRandomIconImage()
-		randomIcon = `http://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${icon.image.full}`
+		randomIcon = `https://ddragon.leagueoflegends.com/cdn/13.8.1/img/profileicon/${icon.image.full}`
 	})
 </script>
 
