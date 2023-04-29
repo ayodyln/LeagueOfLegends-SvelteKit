@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { build } from '$lib/stores'
+	import { build, buildChampion } from '$lib/stores'
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import Stats from '../../components/pages/champions/Stats.svelte'
 
-	let myBuild: any
+	let myBuild: any = buildChampion
 
 	const removeItemHandler = (item: any) => {
 		console.log(item)
@@ -18,15 +18,25 @@
 		}
 	}
 
+	const removeChamp = () => {
+		myBuild = buildChampion
+		$build = JSON.stringify(myBuild)
+	}
+
+	const summonerBuildHandler = (summoner) => {
+		console.log(summoner)
+
+		myBuild.summoners = myBuild.summoners.filter((spell) => spell.name !== summoner.name)
+		$build = JSON.stringify(myBuild)
+	}
+
 	onMount(() => {
-		console.log(JSON.parse($build))
 		myBuild = JSON.parse($build)
-		console.log(myBuild)
 	})
 </script>
 
 <main class="w-full max-w-5xl m-auto flex-grow p-4 flex gap-4">
-	{#if myBuild}
+	{#if myBuild.champion.name}
 		<div class="rounded-lg overflow-hidden w-96 h-fit flex flex-col gap-6">
 			<img
 				src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{myBuild.champion
@@ -34,7 +44,7 @@
 				alt={myBuild.champion.name}
 				class="shadow-xl rounded-lg" />
 
-			<button class="btn btn-error w-full">Remove Champ</button>
+			<button on:click={() => removeChamp()} class="btn btn-error w-full">Remove Champ</button>
 		</div>
 
 		<section class="w-full flex flex-col gap-4">
@@ -104,6 +114,43 @@
 			</div>
 
 			<!-- Summoner -->
+
+			<div class="divider m-0" />
+
+			<div class="flex gap-2 w-full">
+				{#each myBuild.summoners as summoner}
+					<div class="card bg-neutral text-neutral-content w-1/2 h-full bg-base-100 shadow-xl">
+						<div class="card-body p-2">
+							<div class="flex gap-2">
+								<figure class="">
+									<img
+										src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{summoner.image
+											.full}"
+										class="rounded-xl w-20"
+										alt={summoner.name} />
+								</figure>
+
+								<section>
+									<h2 class="card-title">{summoner.name}</h2>
+									<span class="text-sm">{summoner.cooldown} cooldown | {summoner.range} range</span>
+								</section>
+							</div>
+
+							<p class="text-sm">{summoner.description}</p>
+
+							<div class="card-actions">
+								<button on:click={() => summonerBuildHandler(summoner)} class="btn btn-error"
+									>Remove from Build</button>
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</section>
+	{:else}
+		<section class="flex justify-center items-center flex-col w-full h-full gap-4">
+			<h1 class="text-xl font-bold">Please go choose a Champion to start a Build!</h1>
+			<a class="btn btn-success w-96" href="/champions">See Champions</a>
 		</section>
 	{/if}
 </main>
