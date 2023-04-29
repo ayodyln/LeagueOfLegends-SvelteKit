@@ -10,8 +10,9 @@
 		const leagueAPI = await leagueChampions()
 		newChampions = await recentChampions(leagueAPI.champions)
 
-		const buildModel = JSON.parse($build)
-		if (!buildModel.name) {
+		// FIX THIS ERROR SITE WIDE THEN FINISH LAST FEATURES
+		const buildModel = $build ? JSON.parse($build) : null
+		if (!buildModel || !buildModel.hasOwnProperty('champion')) {
 			$build = JSON.stringify(buildChampion)
 		}
 	})

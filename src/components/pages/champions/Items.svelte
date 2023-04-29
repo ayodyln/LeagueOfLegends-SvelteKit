@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
 	import { recommendedItems } from '$lib/league-of-legends/champions'
-	import { build } from '$lib/stores'
+	import { build, buildChampion } from '$lib/stores'
 	export let items: any, selectedChampion: any
 
 	let filter = 'Boots'
 	let filteredItems: any = []
 	let suggestedItems: any[] = []
+	let buildStore: any
 
 	const itemHandler = (e: any) => {
 		const tag = e.target.dataset.tag
@@ -21,7 +22,7 @@
 		// console.log(items)
 		filteredItems = items.filter((item: any) => {
 			if (
-				// item.tags.includes(filter) &&
+				item.tags.includes(filter) &&
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
@@ -36,33 +37,44 @@
 		console.log(item)
 		const myBuild = JSON.parse($build)
 
-		// if (item.tags.includes('Boots')) {
-		// 	const checkBootState = myBuild.boots
+		if (item.tags.includes('Boots')) {
+			const checkBootState = myBuild.boots
 
-		// 	if (checkBootState.name) {
-		// 		myBuild.boots = item
-		// 		$build = JSON.stringify(myBuild)
-		// 		return
-		// 	}
+			if (checkBootState.name) {
+				myBuild.boots = item
+				buildStore = myBuild
+				$build = JSON.stringify(myBuild)
+				return
+			}
 
-		// 	myBuild.boots = item
-		// 	$build = JSON.stringify(myBuild)
-		// 	return
-		// }
+			myBuild.boots = item
+			buildStore = myBuild
+			$build = JSON.stringify(myBuild)
+			return
+		}
 
 		if (myBuild.items.some((i: any) => i.name === item.name)) {
 			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
+			buildStore = myBuild
 			$build = JSON.stringify(myBuild)
 		} else {
 			myBuild.items = [...myBuild.items, item]
+			buildStore = myBuild
 			$build = JSON.stringify(myBuild)
+		}
+	}
+
+	const activeItemHandler = () => {
+		// buildStore.items.some((i) => i.name === item.name) ||
+		// 	buildStore.boots.name === item.name
+		if (buildStore || buildStore.hasOwnProperty('Boots') || buildStore.hasOwnProperty('Items')) {
 		}
 	}
 
 	onMount(() => {
 		filteredItems = items.filter(
 			(item: { tags: string | string[]; name: string }) =>
-				// item.tags.includes(filter) &&
+				item.tags.includes(filter) &&
 				item.name !== 'Boots' &&
 				item.name !== 'The Golden Spatula' &&
 				item.name !== 'Scarecrow Effigy' &&
@@ -75,6 +87,11 @@
 		selectedChampion.tags.forEach((tag: any) => {
 			suggestedItems = [...new Set([...suggestedItems, ...recommendedItems(tag)])]
 		})
+
+		buildStore = $build ? JSON.parse($build) : null
+		if (!buildStore || !buildStore.hasOwnProperty('champion')) {
+			$build = JSON.stringify(buildChampion)
+		}
 	})
 </script>
 
@@ -110,8 +127,8 @@
 			{#each filteredItems as item}
 				{#if !item.hasOwnProperty('inStore')}
 					<button
-						class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
-							JSON.parse($build).boots.name === item.name}
+						class:ring={buildStore.items.some((i) => i.name === item.name) ||
+							buildStore.boots.name === item.name}
 						on:click={() => singleItemHandler(item)}
 						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 						<div class="avatar w-full pointer-events-none">
