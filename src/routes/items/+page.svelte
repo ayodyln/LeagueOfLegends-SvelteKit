@@ -7,6 +7,7 @@
 	let filter = 'Boots'
 	let filteredItems: any = []
 	let itemTags: any = []
+	let modal: any
 
 	const itemHandler = (tag: any) => {
 		filteredItems = []
@@ -105,11 +106,13 @@
 						</div>
 						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
 					</button>
+
 					<button
 						type="button"
 						on:click={(e) => {
 							e.preventDefault()
 							console.log(item)
+							modal = item
 						}}
 						class="btn btn-ghost btn-sm text-xs z-3">Item Info</button>
 				</div>
@@ -142,6 +145,7 @@
 							on:click={(e) => {
 								e.preventDefault()
 								console.log(item)
+								modal = item
 							}}
 							class="btn btn-ghost btn-sm text-xs z-3">Item Info</button>
 					</div>
@@ -150,3 +154,15 @@
 		{/if}
 	</section>
 </main>
+
+{#if modal}
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<label on:click={() => (modal = false)} for="my-modal-4" class="modal modal-open cursor-pointer">
+		<label class="modal-box relative cursor-pointer" for="">
+			<h3 class="text-lg font-bold">{modal.name}</h3>
+			<p class="py-4">
+				{modal.plaintext}
+			</p>
+		</label>
+	</label>
+{/if}
