@@ -7,7 +7,7 @@
 	onMount(async () => {
 		try {
 			const summoners = await fetch(
-				'http://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/summoner.json'
+				'https://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/summoner.json'
 			)
 			const res = await summoners.json()
 			spells = Object.values(res.data)
