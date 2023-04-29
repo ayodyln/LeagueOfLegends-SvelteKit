@@ -36,19 +36,19 @@
 		console.log(item)
 		const myBuild = JSON.parse($build)
 
-		if (item.tags.includes('Boots')) {
-			const checkBootState = myBuild.boots
+		// if (item.tags.includes('Boots')) {
+		// 	const checkBootState = myBuild.boots
 
-			if (checkBootState.name) {
-				myBuild.boots = item
-				$build = JSON.stringify(myBuild)
-				return
-			}
+		// 	if (checkBootState.name) {
+		// 		myBuild.boots = item
+		// 		$build = JSON.stringify(myBuild)
+		// 		return
+		// 	}
 
-			myBuild.boots = item
-			$build = JSON.stringify(myBuild)
-			return
-		}
+		// 	myBuild.boots = item
+		// 	$build = JSON.stringify(myBuild)
+		// 	return
+		// }
 
 		if (myBuild.items.some((i: any) => i.name === item.name)) {
 			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
