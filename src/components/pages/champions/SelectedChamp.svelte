@@ -4,6 +4,7 @@
 	import { colorBadgeHandler } from '$lib/league-of-legends/champions'
 	import Items from './Items.svelte'
 	import ChampionSplashArt from './ChampionSplashArt.svelte'
+	import { onMount } from 'svelte'
 
 	export let selectedChampion: any, items: any
 
@@ -13,6 +14,10 @@
 		buildObject.champion = champion
 		$build = JSON.stringify(buildObject)
 	}
+
+	onMount(() => {
+
+	})
 </script>
 
 <ChampionSplashArt {selectedChampion} />

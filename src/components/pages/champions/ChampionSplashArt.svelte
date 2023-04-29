@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { favorites } from '$lib/stores'
+	import { onMount } from 'svelte'
 
 	export let selectedChampion: any
+
+	let favoritesArray: any = []
 
 	const favHandler = () => {
 		const favs = JSON.parse($favorites)
@@ -15,6 +18,11 @@
 
 		$favorites = JSON.stringify([...favs, selectedChampion.id])
 	}
+
+	onMount(() => {
+		favoritesArray = $favorites ? JSON.parse($favorites) : null
+		if (!favoritesArray) $favorites = JSON.stringify(['Aatrox'])
+	})
 </script>
 
 <section id="champArt" class="relative">
@@ -44,9 +52,9 @@
 
 	<button
 		on:click={favHandler}
-		class="w-8 absolute top-2 right-2 cursor-pointer hover:opacity-50 {JSON.parse(
-			$favorites
-		).includes(selectedChampion.id)
+		class="w-8 absolute top-2 right-2 cursor-pointer hover:opacity-50 {favoritesArray.includes(
+			selectedChampion.id
+		)
 			? 'fill-error'
 			: 'fill-white'}">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class=" pointer-events-none">
