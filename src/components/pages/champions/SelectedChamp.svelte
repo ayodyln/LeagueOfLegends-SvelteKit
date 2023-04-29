@@ -48,7 +48,7 @@
 			<div class="w-full h-24 bg-neutral-focus rounded-lg flex">
 				<div class="h-full rounded overflow-hidden">
 					<img
-						src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/passive/{selectedChampion.passive
+						src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/passive/{selectedChampion.passive
 							.image.full}"
 						alt="Tailwind-CSS-Avatar-component"
 						class="h-full" />
@@ -64,7 +64,7 @@
 				<div class="w-full h-24 bg-neutral-focus rounded-lg flex">
 					<div class="h-full rounded overflow-hidden">
 						<img
-							src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
+							src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
 							alt="Tailwind-CSS-Avatar-component"
 							class="h-full" />
 					</div>

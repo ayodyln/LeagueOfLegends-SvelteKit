@@ -99,7 +99,7 @@
 						<div class="avatar w-full pointer-events-none p-2">
 							<div class="w-full rounded border border-primary">
 								<img
-									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+									src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
 									alt={item.name}
 									loading="lazy" />
 							</div>
@@ -132,7 +132,7 @@
 							<div class="avatar w-full pointer-events-none p-2">
 								<div class="w-full rounded border border-primary">
 									<img
-										src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+										src="https://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
 										alt={item.name}
 										loading="lazy" />
 								</div>
