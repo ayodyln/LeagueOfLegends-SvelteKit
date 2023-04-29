@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { leagueChampions } from '$lib/league-of-legends/champions'
 	import { onMount } from 'svelte'
+	import { build } from '$lib/stores'
 
 	let leagueItems: any = []
 	let filter = 'Boots'
@@ -18,14 +19,41 @@
 
 		filter = tag
 
-		filteredItems = leagueItems.filter((item: any) => {
-			console.log(item)
-			return item.tags.includes(filter)
-		})
+		filteredItems = leagueItems.filter(
+			(item: any) =>
+				item.tags.includes(filter) &&
+				item.name !== 'Boots' &&
+				item.name !== 'The Golden Spatula' &&
+				item.name !== 'Scarecrow Effigy' &&
+				item.name !== `Kalista's Black Spear`
+		)
 	}
 
 	const singleItemHandler = (item: any) => {
 		console.log(item)
+		const myBuild = JSON.parse($build)
+
+		if (item.tags.includes('Boots')) {
+			const checkBootState = myBuild.boots
+
+			if (checkBootState.name) {
+				myBuild.boots = item
+				$build = JSON.stringify(myBuild)
+				return
+			}
+
+			myBuild.boots = item
+			$build = JSON.stringify(myBuild)
+			return
+		}
+
+		if (myBuild.items.some((i: any) => i.name === item.name)) {
+			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
+			$build = JSON.stringify(myBuild)
+		} else {
+			myBuild.items = [...myBuild.items, item]
+			$build = JSON.stringify(myBuild)
+		}
 	}
 
 	onMount(async () => {
@@ -34,7 +62,14 @@
 			.map((item) => item)
 			.filter((item: any) => !item.hasOwnProperty('inStore'))
 
-		filteredItems = leagueItems.filter((item: any) => item.tags.includes(filter))
+		filteredItems = leagueItems.filter(
+			(item: any) =>
+				item.tags.includes(filter) &&
+				item.name !== 'Boots' &&
+				item.name !== 'The Golden Spatula' &&
+				item.name !== 'Scarecrow Effigy' &&
+				item.name !== `Kalista's Black Spear`
+		)
 		itemTags = [...new Set(leagueItems.map((item: any) => item.tags).flat())]
 	})
 </script>
@@ -55,7 +90,7 @@
 			{#each leagueItems as item}
 				<button
 					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[13%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
 					<div class="avatar w-full pointer-events-none">
 						<div class="w-full rounded border border-primary">
 							<img
@@ -69,19 +104,23 @@
 			{/each}
 		{:else}
 			{#each filteredItems as item}
-				<button
-					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[13%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
-					<div class="avatar w-full pointer-events-none">
-						<div class="w-full rounded border border-primary">
-							<img
-								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
-								alt={item.name}
-								loading="lazy" />
+				{#if !item.hasOwnProperty('inStore')}
+					<button
+						class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
+							JSON.parse($build).boots.name === item.name}
+						on:click={() => singleItemHandler(item)}
+						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+						<div class="avatar w-full pointer-events-none">
+							<div class="w-full rounded border border-primary">
+								<img
+									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+									alt={item.name}
+									loading="lazy" />
+							</div>
 						</div>
-					</div>
-					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-				</button>
+						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+					</button>
+				{/if}
 			{/each}
 		{/if}
 	</section>

@@ -27,11 +27,14 @@
 
 <main class="w-full max-w-5xl m-auto flex-grow p-4 flex gap-4">
 	{#if myBuild}
-		<div class="rounded-lg overflow-hidden w-96 shadow-xl h-fit">
+		<div class="rounded-lg overflow-hidden w-96 h-fit flex flex-col gap-6">
 			<img
 				src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{myBuild.champion
 					.id}_0.jpg"
-				alt={myBuild.champion.name} />
+				alt={myBuild.champion.name}
+				class="shadow-xl rounded-lg" />
+
+			<button class="btn btn-error w-full">Remove Champ</button>
 		</div>
 
 		<section class="w-full flex flex-col gap-4">

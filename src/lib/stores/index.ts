@@ -31,3 +31,11 @@ export const build = writable(initBuild)
 build.subscribe((value: any) => {
 	if (browser) window.localStorage.setItem('build', value)
 })
+
+const initBuilds: any = browser ? window.localStorage.getItem('builds') : []
+
+export const builds = writable(initBuilds)
+
+builds.subscribe((value: any) => {
+	if (browser) window.localStorage.setItem('builds', value)
+})
