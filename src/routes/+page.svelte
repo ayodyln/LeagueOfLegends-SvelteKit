@@ -10,7 +10,8 @@
 		const leagueAPI = await leagueChampions()
 		newChampions = await recentChampions(leagueAPI.champions)
 
-		if (!JSON.parse($build).name) {
+		const buildModel = JSON.parse($build)
+		if (!buildModel.name) {
 			$build = JSON.stringify(buildChampion)
 		}
 	})
