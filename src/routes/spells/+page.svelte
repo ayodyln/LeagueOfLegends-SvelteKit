@@ -57,35 +57,47 @@
 <main class="w-full max-w-5xl m-auto flex-grow p-4">
 	<section class="flex flex-wrap justify-center gap-2">
 		{#each spells as spell}
-			<div class="card bg-neutral text-neutral-content w-[400px] h-[250px] bg-base-100 shadow-xl">
-				<div class="card-body p-2">
-					<div class="flex gap-2">
-						<figure class="">
-							<img
-								src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
-								class="rounded-xl w-20"
-								alt={spell.name} />
-						</figure>
+			<div class="card bg-neutral text-neutral-content w-[400px] h-[350px] bg-base-100 shadow-xl">
+				<div class="card-body p-2 flex">
+					<section class="h-full flex flex-col justify-between">
+						<section class="flex flex-col gap-2">
+							<div class="flex gap-2">
+								<figure class="">
+									<img
+										src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
+										class="rounded-xl w-20"
+										alt={spell.name} />
+								</figure>
 
-						<section>
-							<h2 class="card-title">{spell.name}</h2>
-							<span class="text-sm">{spell.cooldown} cooldown | {spell.range} range</span>
+								<section>
+									<h2 class="card-title">{spell.name}</h2>
+									<span class="text-sm">{spell.cooldown} cooldown | {spell.range} range</span>
+								</section>
+							</div>
+
+							<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+							<div
+								tabindex="0"
+								class="collapse border border-base-300 bg-base-100 rounded-box p-0 h-fit">
+								<div class="collapse-title text-lg font-medium">{spell.name} Details</div>
+								<div class="collapse-content">
+									<p class="text-sm">{spell.description}</p>
+								</div>
+							</div>
 						</section>
-					</div>
 
-					<p class="text-sm">{spell.description}</p>
-
-					<div class="card-actions">
-						{#if localSummoners.some((s) => s.name === spell.name)}
-							<button on:click={() => spellBuildHandler(spell)} class="btn btn-error"
-								>Remove from Build</button>
-						{:else if localSummoners.length === 2 && localSummoners.some((s) => s.name !== spell.name)}
-							<button class="btn btn-disabled"></button>
-						{:else}
-							<button on:click={() => spellBuildHandler(spell)} class="btn btn-primary"
-								>Add to Build</button>
-						{/if}
-					</div>
+						<div class="card-actions self-end">
+							{#if localSummoners.some((s) => s.name === spell.name)}
+								<button on:click={() => spellBuildHandler(spell)} class="btn btn-error"
+									>Remove from Build</button>
+							{:else if localSummoners.length === 2 && localSummoners.some((s) => s.name !== spell.name)}
+								<button class="btn btn-disabled" />
+							{:else}
+								<button on:click={() => spellBuildHandler(spell)} class="btn btn-primary"
+									>Add to Build</button>
+							{/if}
+						</div>
+					</section>
 				</div>
 			</div>
 		{/each}
