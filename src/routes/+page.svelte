@@ -224,6 +224,8 @@
 											</label>
 										</th>
 
+										<td>{build.id}</td>
+
 										<td>
 											<div class="flex items-center space-x-3">
 												<div class="avatar">
