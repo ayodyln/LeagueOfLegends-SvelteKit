@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { recommendedItems, mythicItems } from '$lib/league-of-legends/champions'
+	import { recommendedItems, mythicItems, legendaryItems } from '$lib/league-of-legends/champions'
 	import { build, buildChampion } from '$lib/stores'
 	export let items: any, selectedChampion: any
 
@@ -107,7 +107,7 @@
 			{#each items as item}
 				<button
 					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
 					<div class="avatar w-full pointer-events-none">
 						<div class="w-full rounded border border-primary">
 							<img
@@ -116,7 +116,18 @@
 								loading="lazy" />
 						</div>
 					</div>
+
 					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+					{#if mythicItems.includes(item.name)}
+						<div class="badge badge-outline badge-accent">Mythic</div>
+					{:else if legendaryItems.includes(item.name)}
+						<div class="badge badge-outline badge-warning">Legendary</div>
+					{:else if item.tags.includes('Boots')}
+						<div class="badge badge-outline badge-info">General</div>
+					{:else}
+						<div class="badge badge-outline badge-ghost">General</div>
+					{/if}
 				</button>
 			{/each}
 		{:else}
@@ -126,7 +137,7 @@
 						class:ring={buildStore.items.some((i) => i.name === item.name) ||
 							buildStore.boots.name === item.name}
 						on:click={() => singleItemHandler(item)}
-						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus">
+						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
 						<div class="avatar w-full pointer-events-none">
 							<div class="w-full rounded border border-primary">
 								<img
@@ -135,7 +146,18 @@
 									loading="lazy" />
 							</div>
 						</div>
+
 						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+						{#if mythicItems.includes(item.name)}
+							<div class="badge badge-outline badge-accent">Mythic</div>
+						{:else if legendaryItems.includes(item.name)}
+							<div class="badge badge-outline badge-warning">Legendary</div>
+						{:else if item.tags.includes('Boots')}
+							<div class="badge badge-outline badge-info">Boots</div>
+						{:else}
+							<div class="badge badge-outline badge-ghost">General</div>
+						{/if}
 					</button>
 				{/if}
 			{/each}
