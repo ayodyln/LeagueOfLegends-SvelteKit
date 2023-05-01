@@ -62,8 +62,6 @@ export const colorBadgeHandler = (tag: string) => {
 }
 
 export const recommendedItems = (type: any) => {
-	console.log(type)
-
 	const suggestedTags = [
 		...new Set(
 			type
@@ -183,8 +181,6 @@ export const recommendedItems = (type: any) => {
 				.flat()
 		)
 	]
-
-	console.log(suggestedTags)
 
 	return suggestedTags
 }

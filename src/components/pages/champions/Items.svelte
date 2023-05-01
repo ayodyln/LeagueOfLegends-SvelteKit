@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { recommendedItems } from '$lib/league-of-legends/champions'
+	import { recommendedItems, mythicItems } from '$lib/league-of-legends/champions'
 	import { build, buildChampion } from '$lib/stores'
 	export let items: any, selectedChampion: any
 
@@ -33,7 +33,7 @@
 	}
 
 	const singleItemHandler = (item: any) => {
-		console.log(item)
+		// console.log(item)
 		const myBuild = JSON.parse($build)
 
 		if (item.tags.includes('Boots')) {
@@ -50,6 +50,15 @@
 			buildStore = myBuild
 			$build = JSON.stringify(myBuild)
 			return
+		}
+
+		if (mythicItems.includes(item.name)) {
+			const mythics = myBuild.items.map((i) => {
+				if (mythicItems.includes(i.name) && i.name !== item.name) {
+					return i.name
+				}
+			})
+			myBuild.items = myBuild.items.filter((i: any) => !mythics.includes(i.name))
 		}
 
 		if (myBuild.items.some((i: any) => i.name === item.name)) {
