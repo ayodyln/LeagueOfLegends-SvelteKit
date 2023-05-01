@@ -30,7 +30,7 @@
 
 	const buttonHndlr = async (event: any) => {
 		selectedChampion = false
-
+		window.scrollTo({ top: 0, behavior: 'smooth' })
 		try {
 			const champData = await fetch(
 				`https://ddragon.leagueoflegends.com/cdn/13.8.1/data/en_US/champion/${event.target.dataset.id}.json`
@@ -58,10 +58,10 @@
 
 <main class="w-full max-w-6xl p-4 text-white mx-auto">
 	<div class="flex h-full">
-		<section id="champions" class="w-96 h-[800px] bg-base-300 p-2 rounded-lg rounded-r-none">
+		<section id="champions" class="w-96 h-fit bg-base-300 p-2 rounded-lg rounded-r-none">
 			<FilterChampions {filterHandler} {filter} />
 			<div class="divider m-0 h-[3%]" />
-			<div class="overflow-auto h-[86%] flex flex-wrap gap-[3px] justify-center w-full p-1">
+			<div class="overflow-auto h-auto flex flex-wrap gap-[3px] justify-center w-full p-1">
 				{#if !filter}
 					{#each champions as champ}
 						<ChampionAvatar {champ} {buttonHndlr} {selectedChampion} />

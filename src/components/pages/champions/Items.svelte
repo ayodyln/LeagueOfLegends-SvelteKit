@@ -33,7 +33,6 @@
 	}
 
 	const singleItemHandler = (item: any) => {
-		// console.log(item)
 		const myBuild = JSON.parse($build)
 
 		if (item.tags.includes('Boots')) {
