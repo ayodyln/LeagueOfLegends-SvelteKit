@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
-	import { leagueChampions } from '$lib/league-of-legends/champions'
+	import { leagueChampions, mythicItems, legendaryItems } from '$lib/league-of-legends/champions'
 	import ChampionAvatar from '../../components/pages/champions/ChampionAvatar.svelte'
 	import SelectedChamp from '../../components/pages/champions/SelectedChamp.svelte'
 	import FilterChampions from '../../components/pages/champions/FilterChampions.svelte'
@@ -8,20 +8,24 @@
 
 	let champions: any = []
 	let items: any = []
-	let summonerSpells = []
 	let filteredChampions: any[]
 	let filter: string
 	let champTags: any[]
-	// let itemTags: any[]
 	let selectedChampion: any
 
 	onMount(async () => {
 		const leagueAPI = await leagueChampions()
-		items = Object.values(leagueAPI.items.data).map((item) => item)
-		// itemTags = [...new Set(items.map((tag: any) => tag.tags).flat())]
+		items = Object.values(leagueAPI.items.data)
+			.map((item) => item)
+			.filter(
+				(i: any) =>
+					mythicItems.includes(i.name) ||
+					legendaryItems.includes(i.name) ||
+					i.tags.includes('Boots') ||
+					i.tags.includes('Jungle')
+			)
 		champions = Object.values(leagueAPI.champions.data).map((champ) => champ)
 		champTags = [...new Set(champions.map((tag: { tags: any }) => tag.tags).flat())]
-		// console.log(champTags)
 	})
 
 	const buttonHndlr = async (event: any) => {

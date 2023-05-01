@@ -19,7 +19,6 @@
 		}
 
 		filter = tag
-		// console.log(items)
 		filteredItems = items.filter((item: any) => {
 			if (
 				item.tags.includes(filter) &&
@@ -64,13 +63,6 @@
 		}
 	}
 
-	const activeItemHandler = () => {
-		// buildStore.items.some((i) => i.name === item.name) ||
-		// 	buildStore.boots.name === item.name
-		if (buildStore || buildStore.hasOwnProperty('Boots') || buildStore.hasOwnProperty('Items')) {
-		}
-	}
-
 	onMount(() => {
 		filteredItems = items.filter(
 			(item: { tags: string | string[]; name: string }) =>
@@ -81,12 +73,7 @@
 				item.name !== `Kalista's Black Spear`
 		)
 
-		//! make dynamic
-		suggestedItems = recommendedItems(selectedChampion.tags)
-
-		selectedChampion.tags.forEach((tag: any) => {
-			suggestedItems = [...new Set([...suggestedItems, ...recommendedItems(tag)])]
-		})
+		suggestedItems = recommendedItems([...selectedChampion.tags])
 
 		buildStore = $build ? JSON.parse($build) : null
 		if (!buildStore || !buildStore.hasOwnProperty('champion')) {
