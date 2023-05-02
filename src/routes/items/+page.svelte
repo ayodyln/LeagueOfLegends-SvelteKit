@@ -10,6 +10,8 @@
 	let modal: any
 
 	const itemHandler = (tag: any) => {
+		window.scrollTo({ top: 0, behavior: 'smooth' })
+
 		filteredItems = []
 
 		if (filter === tag) {
@@ -31,7 +33,6 @@
 	}
 
 	const singleItemHandler = (item: any) => {
-		console.log(item)
 		const myBuild = JSON.parse($build)
 
 		if (item.tags.includes('Boots')) {

@@ -9,22 +9,23 @@
 	tabindex="0"
 	class="collapse {collapese
 		? 'collapse-open'
-		: ''} border border-base-300 bg-neutral max-w-[400px] w-full rounded-box">
-	<button on:click={() => (collapese = !collapese)} class="collapse-title">
-		<div class="flex gap-2">
-			<figure class="">
+		: ''} border border-base-300 bg-neutral max-w-[600px] w-full rounded-box">
+	<button on:click={() => (collapese = !collapese)} class="collapse-title p-3">
+		<div class="flex gap-2 w-full justify-between">
+			<section class="flex items-start gap-2 w-1/4">
 				<img
 					src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/spell/{spell.image.full}"
-					class="rounded-xl w-20"
+					class="rounded-xl w-12"
 					alt={spell.name} />
-			</figure>
 
-			<section>
 				<h2 class="card-title">{spell.name}</h2>
-				<span class="text-sm">{spell.cooldown} cooldown | {spell.range} range</span>
 			</section>
+
+			<span class="text-sm self-end text-right w-full"
+				>{spell.cooldown} cooldown | {spell.range} range</span>
 		</div>
 	</button>
+
 	<div class="collapse-content h-fit flex flex-col gap-2">
 		<p class="text-sm">{spell.description}</p>
 
