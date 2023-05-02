@@ -50,7 +50,7 @@
 		}
 
 		if (mythicItems.includes(item.name)) {
-			const mythics = myBuild.items.map((i) => {
+			const mythics = myBuild.items.map((i: any) => {
 				if (mythicItems.includes(i.name) && i.name !== item.name) {
 					return i.name
 				}
@@ -87,11 +87,12 @@
 				item.name !== 'Scarecrow Effigy' &&
 				item.name !== `Kalista's Black Spear`
 		)
-		itemTags = [...new Set(leagueItems.map((item: any) => item.tags).flat())]
+
+		itemTags = [...new Set(leagueItems.map((item: any) => [...item.tags]).flat())]
 	})
 </script>
 
-<main class="w-full max-w-6xl p-4 text-white mx-auto flex gap-2 h-full">
+<main class="w-full max-w-5xl p-4 text-white mx-auto flex gap-2 h-full">
 	<ul class="menu bg-neutral w-56 h-fit gap-1">
 		{#each itemTags as item}
 			<li>
@@ -111,7 +112,7 @@
 						on:click={(e) => {
 							singleItemHandler(item)
 						}}
-						class="flex flex-col w-full bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus h-56">
+						class="flex flex-col w-full bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus h-56">
 						<div class="avatar w-full pointer-events-none p-2">
 							<div class="w-full rounded border border-primary">
 								<img
@@ -120,17 +121,20 @@
 									loading="lazy" />
 							</div>
 						</div>
-						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
 
-						{#if mythicItems.includes(item.name)}
-							<div class="badge badge-outline badge-accent">Mythic</div>
-						{:else if legendaryItems.includes(item.name)}
-							<div class="badge badge-outline badge-warning">Legendary</div>
-						{:else if item.tags.includes('Boots')}
-							<div class="badge badge-outline badge-info">Boots</div>
-						{:else}
-							<div class="badge badge-outline badge-ghost">General</div>
-						{/if}
+						<span class="h-full flex flex-col justify-between items-center">
+							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+							{#if mythicItems.includes(item.name)}
+								<div class="badge badge-outline badge-accent">Mythic</div>
+							{:else if legendaryItems.includes(item.name)}
+								<div class="badge badge-outline badge-warning">Legendary</div>
+							{:else if item.tags.includes('Boots')}
+								<div class="badge badge-outline badge-info">Boots</div>
+							{:else}
+								<div class="badge badge-outline badge-ghost">General</div>
+							{/if}
+						</span>
 					</button>
 
 					<button
@@ -146,7 +150,7 @@
 		{:else}
 			{#each filteredItems as item}
 				{#if !item.hasOwnProperty('inStore')}
-					<div class="w-[15%] flex flex-col items-center justify-between gap-1">
+					<div class="w-[15%] flex flex-col items-center gap-1">
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<button
 							on:click={(e) => {
@@ -154,7 +158,7 @@
 							}}
 							class:ring={JSON.parse($build).items.some((i) => i.name === item.name) ||
 								JSON.parse($build).boots.name === item.name}
-							class="flex flex-col w-full bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center hover:bg-neutral-focus h-56">
+							class="flex flex-col w-full bg-neutral text-neutral-content p-2 pb-4 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus h-56">
 							<div class="avatar w-full pointer-events-none p-2">
 								<div class="w-full rounded border border-primary">
 									<img
@@ -163,17 +167,20 @@
 										loading="lazy" />
 								</div>
 							</div>
-							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
 
-							{#if mythicItems.includes(item.name)}
-								<div class="badge badge-outline badge-accent">Mythic</div>
-							{:else if legendaryItems.includes(item.name)}
-								<div class="badge badge-outline badge-warning">Legendary</div>
-							{:else if item.tags.includes('Boots')}
-								<div class="badge badge-outline badge-info">Boots</div>
-							{:else}
-								<div class="badge badge-outline badge-ghost">General</div>
-							{/if}
+							<span class="h-full flex flex-col justify-between items-center">
+								<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+								{#if mythicItems.includes(item.name)}
+									<div class="badge badge-outline badge-accent">Mythic</div>
+								{:else if legendaryItems.includes(item.name)}
+									<div class="badge badge-outline badge-warning">Legendary</div>
+								{:else if item.tags.includes('Boots')}
+									<div class="badge badge-outline badge-info">Boots</div>
+								{:else}
+									<div class="badge badge-outline badge-ghost">General</div>
+								{/if}
+							</span>
 						</button>
 
 						<button

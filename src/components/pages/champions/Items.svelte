@@ -106,7 +106,7 @@
 			{#each items as item}
 				<button
 					on:click={() => singleItemHandler(item)}
-					class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
+					class="flex flex-col w-[15%] h-44 bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
 					<div class="avatar w-full pointer-events-none">
 						<div class="w-full rounded border border-primary">
 							<img
@@ -116,36 +116,7 @@
 						</div>
 					</div>
 
-					<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
-
-					{#if mythicItems.includes(item.name)}
-						<div class="badge badge-outline badge-accent">Mythic</div>
-					{:else if legendaryItems.includes(item.name)}
-						<div class="badge badge-outline badge-warning">Legendary</div>
-					{:else if item.tags.includes('Boots')}
-						<div class="badge badge-outline badge-info">Boots</div>
-					{:else}
-						<div class="badge badge-outline badge-ghost">General</div>
-					{/if}
-				</button>
-			{/each}
-		{:else}
-			{#each filteredItems as item}
-				{#if !item.hasOwnProperty('inStore')}
-					<button
-						class:ring={buildStore.items.some((i) => i.name === item.name) ||
-							buildStore.boots.name === item.name}
-						on:click={() => singleItemHandler(item)}
-						class="flex flex-col w-[15%] bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
-						<div class="avatar w-full pointer-events-none">
-							<div class="w-full rounded border border-primary">
-								<img
-									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
-									alt={item.name}
-									loading="lazy" />
-							</div>
-						</div>
-
+					<span class="h-full flex flex-col justify-between items-center">
 						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
 
 						{#if mythicItems.includes(item.name)}
@@ -157,6 +128,39 @@
 						{:else}
 							<div class="badge badge-outline badge-ghost">General</div>
 						{/if}
+					</span>
+				</button>
+			{/each}
+		{:else}
+			{#each filteredItems as item}
+				{#if !item.hasOwnProperty('inStore')}
+					<button
+						class:ring={buildStore.items.some((i) => i.name === item.name) ||
+							buildStore.boots.name === item.name}
+						on:click={() => singleItemHandler(item)}
+						class="flex flex-col w-[15%] h-44 bg-neutral text-neutral-content p-2 rounded-lg gap-2 items-center justify-between hover:bg-neutral-focus">
+						<div class="avatar w-full pointer-events-none">
+							<div class="w-full rounded border border-primary">
+								<img
+									src="http://ddragon.leagueoflegends.com/cdn/13.8.1/img/item/{item.image.full}"
+									alt={item.name}
+									loading="lazy" />
+							</div>
+						</div>
+
+						<span class="h-full flex flex-col justify-between items-center">
+							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+							{#if mythicItems.includes(item.name)}
+								<div class="badge badge-outline badge-accent">Mythic</div>
+							{:else if legendaryItems.includes(item.name)}
+								<div class="badge badge-outline badge-warning">Legendary</div>
+							{:else if item.tags.includes('Boots')}
+								<div class="badge badge-outline badge-info">Boots</div>
+							{:else}
+								<div class="badge badge-outline badge-ghost">General</div>
+							{/if}
+						</span>
 					</button>
 				{/if}
 			{/each}
