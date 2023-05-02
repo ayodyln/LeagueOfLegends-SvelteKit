@@ -19,7 +19,7 @@ const initFavorites = browser ? window.localStorage.getItem('favorites') : ['Aat
 export const favorites: any = writable(initFavorites)
 
 favorites.subscribe((value: any) => {
-	if (value === null) value = []
+	if (value === null) value = ['Aatrox']
 	if (browser) window.localStorage.setItem('favorites', value)
 })
 
@@ -36,5 +36,6 @@ const initBuilds = browser ? window.localStorage.getItem('builds') : []
 export const builds: any = writable(initBuilds)
 
 builds.subscribe((value: any) => {
+	if (value === null) value = []
 	if (browser) window.localStorage.setItem('builds', value)
 })
