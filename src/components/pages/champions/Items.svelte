@@ -52,7 +52,7 @@
 		}
 
 		if (mythicItems.includes(item.name)) {
-			const mythics = myBuild.items.map((i) => {
+			const mythics = myBuild.items.map((i: any) => {
 				if (mythicItems.includes(i.name) && i.name !== item.name) {
 					return i.name
 				}
@@ -123,7 +123,7 @@
 					{:else if legendaryItems.includes(item.name)}
 						<div class="badge badge-outline badge-warning">Legendary</div>
 					{:else if item.tags.includes('Boots')}
-						<div class="badge badge-outline badge-info">General</div>
+						<div class="badge badge-outline badge-info">Boots</div>
 					{:else}
 						<div class="badge badge-outline badge-ghost">General</div>
 					{/if}

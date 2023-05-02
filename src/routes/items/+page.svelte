@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { leagueChampions } from '$lib/league-of-legends/champions'
+	import { leagueChampions, mythicItems, legendaryItems } from '$lib/league-of-legends/champions'
 	import { onMount } from 'svelte'
 	import { build } from '$lib/stores'
 
@@ -49,6 +49,15 @@
 			return
 		}
 
+		if (mythicItems.includes(item.name)) {
+			const mythics = myBuild.items.map((i) => {
+				if (mythicItems.includes(i.name) && i.name !== item.name) {
+					return i.name
+				}
+			})
+			myBuild.items = myBuild.items.filter((i: any) => !mythics.includes(i.name))
+		}
+
 		if (myBuild.items.some((i: any) => i.name === item.name)) {
 			myBuild.items = myBuild.items.filter((i: any) => i.name !== item.name)
 			$build = JSON.stringify(myBuild)
@@ -62,7 +71,13 @@
 		const { items } = await leagueChampions()
 		leagueItems = Object.values(items.data)
 			.map((item) => item)
-			.filter((item: any) => !item.hasOwnProperty('inStore'))
+			.filter(
+				(i: any) =>
+					mythicItems.includes(i.name) ||
+					legendaryItems.includes(i.name) ||
+					i.tags.includes('Boots') ||
+					i.tags.includes('Jungle')
+			)
 
 		filteredItems = leagueItems.filter(
 			(item: any) =>
@@ -90,7 +105,7 @@
 	<section class="w-full flex flex-wrap h-fit p-2 gap-2 justify-center">
 		{#if !filter}
 			{#each leagueItems as item}
-				<div class="w-[15%] flex flex-col items-center gap-1">
+				<div class="w-[15%] flex flex-col items-center justify-between gap-1">
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<button
 						on:click={(e) => {
@@ -106,6 +121,16 @@
 							</div>
 						</div>
 						<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+						{#if mythicItems.includes(item.name)}
+							<div class="badge badge-outline badge-accent">Mythic</div>
+						{:else if legendaryItems.includes(item.name)}
+							<div class="badge badge-outline badge-warning">Legendary</div>
+						{:else if item.tags.includes('Boots')}
+							<div class="badge badge-outline badge-info">Boots</div>
+						{:else}
+							<div class="badge badge-outline badge-ghost">General</div>
+						{/if}
 					</button>
 
 					<button
@@ -121,7 +146,7 @@
 		{:else}
 			{#each filteredItems as item}
 				{#if !item.hasOwnProperty('inStore')}
-					<div class="w-[15%] flex flex-col items-center gap-1">
+					<div class="w-[15%] flex flex-col items-center justify-between gap-1">
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<button
 							on:click={(e) => {
@@ -139,6 +164,16 @@
 								</div>
 							</div>
 							<p class="text-xs pointer-events-none">{item.name.split(/(?=[A-Z])/).join(' ')}</p>
+
+							{#if mythicItems.includes(item.name)}
+								<div class="badge badge-outline badge-accent">Mythic</div>
+							{:else if legendaryItems.includes(item.name)}
+								<div class="badge badge-outline badge-warning">Legendary</div>
+							{:else if item.tags.includes('Boots')}
+								<div class="badge badge-outline badge-info">Boots</div>
+							{:else}
+								<div class="badge badge-outline badge-ghost">General</div>
+							{/if}
 						</button>
 
 						<button
